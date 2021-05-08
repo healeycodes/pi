@@ -40,7 +40,7 @@ def get_msg():
         # TODO: only update after print actually prints it
         messages.update_msg_status(msg.msg_id, f"printed at {datetime.now()}")
         return f"{msg.text} – {msg.name}"
-    return "No new messages :|", 204
+    return "No new messages yet :|", 204
 
 
 @app.route("/check-msg")

@@ -32,14 +32,14 @@ def get_msg():
         "SELECT id, status, text, name FROM queue WHERE status LIKE 'queued%' LIMIT 1"
     )
     row = cursor.fetchone()
-    msg = Message(
-        msg_id=row[0],
-        status=row[1],
-        text=row[2],
-        name=row[3],
-    )
+    if row:
+        return Message(
+            msg_id=row[0],
+            status=row[1],
+            text=row[2],
+            name=row[3],
+        )
     close(connection)
-    return msg
 
 
 def put_msg(text, name):
