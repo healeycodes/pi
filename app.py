@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return (
-        "Use <code>/put-msg?msg=Hello</code> to send a message to my receipt printer!",
+        "Use <code>/put-msg?text=Hello</code> to send a message to my receipt printer!",
         200,
         {"Content-Type": "text/html; charset=utf-8"},
     )
@@ -17,13 +17,13 @@ def index():
 
 @app.route("/put-msg")
 def put_msg():
-    msg = request.args.get("msg")
+    text = request.args.get("text")
     name = request.remote_addr
     if msg:
-        msg_id = messages.put_msg(msg, name)
+        msg_id = messages.put_msg(text, name)
         return msg_id
     else:
-        return 'missing query parameter of "msg" :(', 400
+        return 'missing query parameter of "text" :(', 400
 
 
 @app.route("/get-msg")

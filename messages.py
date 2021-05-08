@@ -42,7 +42,7 @@ def get_msg():
     return msg
 
 
-def put_msg(msg, name):
+def put_msg(text, name):
     status = f"queued: {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
