@@ -43,7 +43,7 @@ def get_msg():
 
 
 def put_msg(text, name):
-    status = f"queued: {datetime.now()}"
+    status = f"queued at {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
         "INSERT INTO queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
@@ -59,7 +59,8 @@ def check_msg(msg_id):
     cursor.execute("SELECT (status) FROM queue WHERE id=%s", (msg_id))
     row = cursor.fetchone()
     close(connection)
-    return row[0]
+    if row:
+        return row[0]
 
 
 def close(connection):

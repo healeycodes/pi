@@ -1,5 +1,6 @@
 import os
 import messages
+from datetime import datetime
 from flask import Flask, request
 
 PW = os.environ["PRINTER_PW"]
@@ -23,7 +24,7 @@ def put_msg():
         msg_id = messages.put_msg(text, name)
         return f"{msg_id}"
     else:
-        return 'missing query parameter of "text" :(', 400
+        return 'Missing query parameter of "text" :(', 400
 
 
 @app.route("/get-msg")
@@ -37,9 +38,24 @@ def get_msg():
     msg = messages.get_msg()
     if msg:
         # TODO: only update after print actually prints it
-        messages.update_msg_status(msg.msg_id, "printed")
+        messages.update_msg_status(msg.msg_id, f"printed at {datetime.now()}")
         return msg
     return "", 204
+
+
+@app.route("/check-msg")
+def check_msg():
+    password = request.args.get("password")
+    msg_id = request.args.get("id")
+
+    # please don't timing attack me..
+    if not password or password != PW:
+        return "", 400
+
+    status = messages.check_msg(msg_id)
+    if status:
+        return status
+    return "No message by that id :(", 404
 
 
 if __name__ == "__main__":
