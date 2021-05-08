@@ -19,7 +19,7 @@ def index():
 def put_msg():
     text = request.args.get("text")
     name = request.remote_addr
-    if msg:
+    if text:
         msg_id = messages.put_msg(text, name)
         return msg_id
     else:
