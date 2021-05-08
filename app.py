@@ -4,7 +4,6 @@ from flask import Flask, request
 
 PW = os.environ["PRINTER_PW"]
 app = Flask(__name__)
-q = HerokuRedisQueue("messages")
 
 
 @app.route("/")
