@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
+
 @dataclass
 class Message:
     msg_id: str
@@ -22,14 +23,13 @@ def connect():
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
     cursor.execute("UPDATE queue set status=%s WHERE msg=%s", (status, msg_id))
-    cursor.close()
-    connection.close()
+    close(connection)
 
 
 def get_msg():
     connection, cursor = connect()
     cursor.execute(
-        "SELECT (id, status, text, user) WHERE status LIKE 'queued%' LIMIT 1"
+        "SELECT (id, status, text, user) FROM queue WHERE status LIKE 'queued%' LIMIT 1"
     )
     row = cursor.fetchone()
     msg = Message(
@@ -38,8 +38,7 @@ def get_msg():
         text=row[2],
         user=row[3],
     )
-    cursor.close()
-    connection.close()
+    close(connection)
     return msg
 
 
@@ -51,23 +50,25 @@ def put_msg(msg, user):
         (status, text, user),
     )
     msg_id = cursor.fetchone()[0]
-    cursor.close()
-    connection.close()
+    close(connection)
     return msg_id
 
 
 def check_msg(msg_id):
     connection, cursor = connect()
-    cursor.execute("SELECT (status) WHERE id=%s", (msg_id))
+    cursor.execute("SELECT (status) FROM queue WHERE id=%s", (msg_id))
     row = cursor.fetchone()
-    cursor.close()
-    connection.close()
+    close(connection)
     return row[0]
 
 
+def close(connection):
+    connection.commit()
+    connection.close()
+
+
 def setup():
-    connection = psycopg2.connect(DATABASE_URL, sslmode="require")
-    cursor = connection.cursor()
+    connection, cursor = connect()
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS queue (
@@ -78,10 +79,7 @@ def setup():
         )
         """
     )
-
-    connection.commit()
-    cursor.close()
-    connection.close()
+    close(connection)
 
 
 setup()
