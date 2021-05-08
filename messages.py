@@ -75,7 +75,7 @@ def setup():
         id serial PRIMARY KEY,
         status varchar(256) NOT NULL,
         text varchar(256) NOT NULL,
-        user varchar(256) NOT NULL,
+        user varchar(256) NOT NULL
         )
         """
     )
