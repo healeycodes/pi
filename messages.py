@@ -4,8 +4,6 @@ from datetime import datetime
 from dataclasses import dataclass
 
 DATABASE_URL = os.environ["DATABASE_URL"]
-DATABASE_NAME = "messages"
-
 
 @dataclass
 class Message:
@@ -16,7 +14,7 @@ class Message:
 
 
 def connect():
-    connection = psycopg2.connect(DATABASE_URL, dbname=DATABASE_NAME, sslmode="require")
+    connection = psycopg2.connect(DATABASE_URL, sslmode="require")
     cursor = connection.cursor()
     return connection, cursor
 
@@ -70,13 +68,6 @@ def check_msg(msg_id):
 def setup():
     connection = psycopg2.connect(DATABASE_URL, sslmode="require")
     cursor = connection.cursor()
-    cursor.execute(
-        f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{DATABASE_NAME}'"
-    )
-    exists = cursor.fetchone()
-    if not exists:
-        cursor.execute(f"CREATE DATABASE {DATABASE_NAME}")
-
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS queue (
