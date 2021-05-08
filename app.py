@@ -45,12 +45,7 @@ def get_msg():
 
 @app.route("/check-msg")
 def check_msg():
-    password = request.args.get("password")
     msg_id = request.args.get("id")
-
-    # please don't timing attack me..
-    if not password or password != PW:
-        return "", 400
 
     status = messages.check_msg(msg_id)
     if status:

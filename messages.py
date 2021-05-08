@@ -29,7 +29,7 @@ def update_msg_status(msg_id, status):
 def get_msg():
     connection, cursor = connect()
     cursor.execute(
-        "SELECT (id, status, text, name) FROM queue WHERE status LIKE 'queued%' LIMIT 1"
+        "SELECT id, status, text, name FROM queue WHERE status LIKE 'queued%' LIMIT 1"
     )
     row = cursor.fetchone()
     msg = Message(
@@ -56,7 +56,7 @@ def put_msg(text, name):
 
 def check_msg(msg_id):
     connection, cursor = connect()
-    cursor.execute("SELECT (status) FROM queue WHERE id=%s", (msg_id))
+    cursor.execute("SELECT status FROM queue WHERE id=%s", (msg_id))
     row = cursor.fetchone()
     close(connection)
     if row:
