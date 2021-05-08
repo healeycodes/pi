@@ -1,5 +1,5 @@
 import os
-from queue import HerokuRedisQueue
+import messages
 from flask import Flask, request
 
 PW = os.environ["PRINTER_PW"]
@@ -21,20 +21,24 @@ def put_msg():
     msg = request.args.get("msg")
     user = request.remote_addr
     if msg:
-        q.put(f"msg – {user}")
-    return f"thanks {user} :)"
+        msg_id = messages.put_msg(msg, user)
+        return msg_id
+    else:
+        return 'missing query parameter of "msg" :(', 400
 
 
 @app.route("/get-msg")
 def get_msg():
     password = request.args.get("password")
-    
+
     # please don't timing attack me..
     if not password or password != PW:
         return "", 400
 
-    msg = q.get()
+    msg = messages.get_msg()
     if msg:
+        # TODO: only update after print actually prints it
+        messages.update_msg_status(msg.msg_id, 'printed')
         return msg
     return "", 204
 
