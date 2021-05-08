@@ -11,7 +11,7 @@ class Message:
     msg_id: str
     status: str
     text: str
-    user: str
+    name: str
 
 
 def connect():
@@ -29,25 +29,25 @@ def update_msg_status(msg_id, status):
 def get_msg():
     connection, cursor = connect()
     cursor.execute(
-        "SELECT (id, status, text, user) FROM queue WHERE status LIKE 'queued%' LIMIT 1"
+        "SELECT (id, status, text, name) FROM queue WHERE status LIKE 'queued%' LIMIT 1"
     )
     row = cursor.fetchone()
     msg = Message(
         msg_id=row[0],
         status=row[1],
         text=row[2],
-        user=row[3],
+        name=row[3],
     )
     close(connection)
     return msg
 
 
-def put_msg(msg, user):
+def put_msg(msg, name):
     status = f"queued: {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
-        "INSERT INTO queue (status, text, user) VALUES (%s, %s, %s) RETURNING id",
-        (status, text, user),
+        "INSERT INTO queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
+        (status, text, name),
     )
     msg_id = cursor.fetchone()[0]
     close(connection)
@@ -75,7 +75,7 @@ def setup():
         id serial PRIMARY KEY,
         status varchar(256) NOT NULL,
         text varchar(256) NOT NULL,
-        user varchar(256) NOT NULL
+        name varchar(256) NOT NULL
         )
         """
     )

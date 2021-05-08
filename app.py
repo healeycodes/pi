@@ -18,9 +18,9 @@ def index():
 @app.route("/put-msg")
 def put_msg():
     msg = request.args.get("msg")
-    user = request.remote_addr
+    name = request.remote_addr
     if msg:
-        msg_id = messages.put_msg(msg, user)
+        msg_id = messages.put_msg(msg, name)
         return msg_id
     else:
         return 'missing query parameter of "msg" :(', 400
