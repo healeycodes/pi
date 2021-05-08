@@ -22,7 +22,7 @@ def connect():
 
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
-    cursor.execute("UPDATE queue set status=%s WHERE msg=%s", (status, msg_id))
+    cursor.execute("UPDATE queue set status=%s WHERE id=%s", (status, msg_id))
     close(connection)
 
 
