@@ -33,14 +33,14 @@ def get_msg():
 
     # please don't timing attack me..
     if not password or password != PW:
-        return "", 400
+        return "Bad password :(", 400
 
     msg = messages.get_msg()
     if msg:
         # TODO: only update after print actually prints it
         messages.update_msg_status(msg.msg_id, f"printed at {datetime.now()}")
-        return msg
-    return "", 204
+        return f"{msg.text} – {msg.name}"
+    return "No new messages :|", 204
 
 
 @app.route("/check-msg")
