@@ -21,7 +21,7 @@ def put_msg():
     name = request.remote_addr
     if text:
         msg_id = messages.put_msg(text, name)
-        return msg_id
+        return f"{msg_id}"
     else:
         return 'missing query parameter of "text" :(', 400
 
@@ -37,7 +37,7 @@ def get_msg():
     msg = messages.get_msg()
     if msg:
         # TODO: only update after print actually prints it
-        messages.update_msg_status(msg.msg_id, 'printed')
+        messages.update_msg_status(msg.msg_id, "printed")
         return msg
     return "", 204
 
