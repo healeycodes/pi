@@ -27,7 +27,7 @@ def put_msg(text, name):
     status = f"queued at {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
-        "INSERT INTO queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
+        "INSERT INTO message_queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
         (status, text, name),
     )
     msg_id = cursor.fetchone()[0]
@@ -37,13 +37,13 @@ def put_msg(text, name):
 
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
-    cursor.execute("UPDATE queue set status=%s WHERE id=%s", (status, msg_id))
+    cursor.execute("UPDATE message_queue set status=%s WHERE id=%s", (status, msg_id))
     close(connection)
 
 
 def check_msg(msg_id):
     connection, cursor = connect()
-    cursor.execute("SELECT status FROM queue WHERE id=%s", (msg_id))
+    cursor.execute("SELECT status FROM message_queue WHERE id=%s", (msg_id))
     row = cursor.fetchone()
     close(connection)
     if row:
@@ -53,7 +53,7 @@ def check_msg(msg_id):
 def get_msg():
     connection, cursor = connect()
     cursor.execute(
-        "SELECT id, status, text, name FROM queue WHERE status LIKE 'queued%' LIMIT 1"
+        "SELECT id, status, text, name FROM message_queue WHERE status LIKE 'queued%' LIMIT 1"
     )
     row = cursor.fetchone()
     if row:
@@ -68,7 +68,7 @@ def get_msg():
 
 def list_msgs():
     connection, cursor = connect()
-    cursor.execute("SELECT id, status, text, name FROM queue")
+    cursor.execute("SELECT id, status, text, name FROM message_queue")
     rows = cursor.fetchall()
     if rows:
         return [
@@ -92,7 +92,7 @@ def setup():
     connection, cursor = connect()
     cursor.execute(
         """
-        CREATE TABLE IF NOT EXISTS queue (
+        CREATE TABLE IF NOT EXISTS message_queue (
         id serial PRIMARY KEY,
         status varchar(256) NOT NULL,
         text varchar(256) NOT NULL,
