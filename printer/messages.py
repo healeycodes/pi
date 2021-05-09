@@ -13,18 +13,38 @@ class Message:
     text: str
     name: str
 
+    def debug(self):
+        return f'{self.msg_id}, {self.status}, {self.text}, {self.name}'
+
 
 def connect():
     connection = psycopg2.connect(DATABASE_URL, sslmode="require")
     cursor = connection.cursor()
     return connection, cursor
 
+def put_msg(text, name):
+    status = f"queued at {datetime.now()}"
+    connection, cursor = connect()
+    cursor.execute(
+        "INSERT INTO queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
+        (status, text, name),
+    )
+    msg_id = cursor.fetchone()[0]
+    close(connection)
+    return msg_id
 
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
     cursor.execute("UPDATE queue set status=%s WHERE id=%s", (status, msg_id))
     close(connection)
 
+def check_msg(msg_id):
+    connection, cursor = connect()
+    cursor.execute("SELECT status FROM queue WHERE id=%s", (msg_id))
+    row = cursor.fetchone()
+    close(connection)
+    if row:
+        return row[0]
 
 def get_msg():
     connection, cursor = connect()
@@ -41,26 +61,21 @@ def get_msg():
         )
     close(connection)
 
-
-def put_msg(text, name):
-    status = f"queued at {datetime.now()}"
+def list_msgs():
     connection, cursor = connect()
     cursor.execute(
-        "INSERT INTO queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
-        (status, text, name),
+        "SELECT id, status, text, name FROM queue"
     )
-    msg_id = cursor.fetchone()[0]
+    rows = cursor.fetchall()
+    if rows:
+        return [Message(
+            msg_id=row[0],
+            status=row[1],
+            text=row[2],
+            name=row[3],
+        ) for row in rows]
     close(connection)
-    return msg_id
 
-
-def check_msg(msg_id):
-    connection, cursor = connect()
-    cursor.execute("SELECT status FROM queue WHERE id=%s", (msg_id))
-    row = cursor.fetchone()
-    close(connection)
-    if row:
-        return row[0]
 
 
 def close(connection):
