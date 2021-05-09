@@ -1,4 +1,4 @@
-# pi architecture
+# 🥧 pi architecture
 
 I'm currently setting up my living room Raspberry Pi.
 
