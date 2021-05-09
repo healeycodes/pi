@@ -5,7 +5,7 @@ from datetime import datetime
 from flask import Blueprint, request
 
 PW = os.environ["PRINTER_PW"]
-bp = Blueprint('printer', __name__, url_prefix='printer')
+bp = Blueprint('printer', __name__, url_prefix='/printer')
 
 
 @bp.route("/")
