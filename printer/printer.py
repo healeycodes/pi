@@ -40,7 +40,7 @@ def get_msg():
     if msg:
         # TODO: only update after printer confirms it's printed
         messages.update_msg_status(msg.msg_id, f"printed at {datetime.now()}")
-        return f"{msg.text} – {msg.name}"
+        return f"{msg.text} - {msg.name}"
     return "", 204
 
 
