@@ -61,7 +61,7 @@ def get_msg():
 
 
 @bp.route("/list-msgs")
-def check_msg():
+def list_msgs():
     password = request.args.get("password")
     msg_id = request.args.get("id")
 
