@@ -4,6 +4,8 @@ I'm currently setting up my living room Raspberry Pi.
 
 The first add-on is a POS58 receipt printer that accepts messages via HTTP.
 
+![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.jpeg)
+
 `/printer/put-msg?text=Hello` – print a message.
 
 `/printer/check-msg?id=1` – check the status of a message (has it been printed yet?).
