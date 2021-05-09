@@ -10,7 +10,7 @@ app.register_blueprint(printer.bp)
 def index():
     return (
         """
-        <p>Use <code>/printer/put-msg?text=Hello</code> to send a message to my receipt printer!<p>
+        <p>Use <code>/printer/put-msg?text=Hello</code> to send a message to the receipt printer in my living room!<p>
         <p>Or try this handy form I whipped up for ya.</p>
         <form action="/printer/put-msg" method="get">
         <label for="text">Message:</label>
