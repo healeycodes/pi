@@ -42,7 +42,7 @@ pip install -r requirements.txt
 python python poller.py https://your-url.herokuapp.com password_here 
 ```
 
-I run that last command on boot via `.bashrc`.
+I run that last command on boot via `/etc/rc.local`.
 
 ## Tests
 
