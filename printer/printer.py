@@ -11,7 +11,15 @@ bp = Blueprint('printer', __name__, url_prefix='printer')
 @bp.route("/")
 def index():
     return (
-        "Use <code>/put-msg?text=Hello</code> to send a message to my receipt printer!",
+        """
+        <p>Use <code>/put-msg?text=Hello</code> to send a message to my receipt printer!<p>
+        <p>Or try this handy form I whipped up for ya.</p>
+        <form action="/put-msg" method="get">
+        <label for="text">Message:</label>
+            <input type="text" id="text" name="text">
+            <input type="submit" value="Send!">
+        </form>
+        """,
         200,
         {"Content-Type": "text/html; charset=utf-8"},
     )
