@@ -1,28 +1,10 @@
-
 import os
 from printer import messages
 from datetime import datetime
 from flask import Blueprint, request
 
 PW = os.environ["PRINTER_PW"]
-bp = Blueprint('printer', __name__, url_prefix='/printer')
-
-
-@bp.route("/")
-def index():
-    return (
-        """
-        <p>Use <code>/printer/put-msg?text=Hello</code> to send a message to my receipt printer!<p>
-        <p>Or try this handy form I whipped up for ya.</p>
-        <form action="printer/put-msg" method="get">
-        <label for="text">Message:</label>
-            <input type="text" id="text" name="text">
-            <input type="submit" value="Send!">
-        </form>
-        """,
-        200,
-        {"Content-Type": "text/html; charset=utf-8"},
-    )
+bp = Blueprint("printer", __name__, url_prefix="/printer")
 
 
 @bp.route("/put-msg")
@@ -35,6 +17,7 @@ def put_msg():
     else:
         return 'Missing query parameter of "text" :(', 400
 
+
 @bp.route("/check-msg")
 def check_msg():
     msg_id = request.args.get("id")
@@ -43,6 +26,7 @@ def check_msg():
     if status:
         return status
     return "No message by that id :(", 404
+
 
 @bp.route("/get-msg")
 def get_msg():
@@ -71,6 +55,6 @@ def list_msgs():
 
     msgs = messages.list_msgs()
     if msgs:
-        return '\n'.join([msg.debug() for msg in msgs])
+        return "\n".join([msg.debug() for msg in msgs])
 
-    return '', 404
+    return "", 404
