@@ -4,6 +4,8 @@ I'm currently setting up my living room Raspberry Pi.
 
 The first add-on is a POS58 receipt printer that accepts messages via HTTP.
 
+This is so friends and family (and presumably spam bots too since I haven't hidden the URL) can ping me their thoughts.
+
 ![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.jpeg)
 
 `/printer/put-msg?text=Hello` – print a message.
