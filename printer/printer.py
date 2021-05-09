@@ -55,6 +55,6 @@ def list_msgs():
 
     msgs = messages.list_msgs()
     if msgs:
-        return "\n".join([msg.debug() for msg in msgs])
+        return "".join([f"{msg.debug()}\n" for msg in msgs])
 
     return "", 404

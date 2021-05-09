@@ -14,7 +14,7 @@ class Message:
     name: str
 
     def debug(self):
-        return f"{self.msg_id}, {self.status}, {self.text}, {self.name}"
+        return f"{self.msg_id} | {self.status} | {self.text} | {self.name}"
 
 
 def connect():
