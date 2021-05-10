@@ -1,5 +1,5 @@
 import os
-from printer import messages
+from printer import messages, utils
 from datetime import datetime
 from flask import Blueprint, request
 
@@ -10,7 +10,7 @@ bp = Blueprint("printer", __name__, url_prefix="/printer")
 @bp.route("/put-msg")
 def put_msg():
     text = request.args.get("text")
-    name = request.remote_addr
+    name = utils.get_remote_address()
     if text:
         msg_id = messages.put_msg(text, name)
         return f"{msg_id}"
