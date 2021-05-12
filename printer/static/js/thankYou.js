@@ -1,16 +1,16 @@
 const msgID = document.querySelector("#msg-id").dataset.msgId;
 const animation = document.querySelector("#animation");
 
-animation.innerHTML = "Waiting for printer";
+animation.innerHTML = "waiting for printer";
 function checkStatus() {
-  fetch(`check-msg?${msgID}`)
+  anim.innerHTML += "\n...";
+  fetch(`check-msg?${msgid}`)
     .then((res) => res.json())
     .then((json) => {
       if (!json.status.includes("printed")) {
-        animation.innerHTML += "\n...";
-        setTimeout(checkStatus, 500);
+        setTimeout(checkStatus, 400);
       } else {
-        animation.innerHTML = json.status;
+        anim.innerHTML = json.status;
       }
     });
 }
