@@ -63,7 +63,7 @@ def output(data):
     lines = textwrap.wrap(data, width=30)
     for line in lines:
         ep.write(line + "\n")
-    ep.write("\n\n\n\n")
+    ep.write("\n\n")
 
     # reattach if it was attached originally
     dev.reset()

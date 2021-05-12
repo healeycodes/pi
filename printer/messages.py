@@ -3,7 +3,7 @@ import psycopg2
 from datetime import datetime
 from dataclasses import dataclass
 
-DATABASE_URL = os.environ["DATABASE_URL"]
+DATABASE_URL = os.environ["DATABASE_URL"] if "DATABASE_URL" in os.environ else None
 
 
 @dataclass
@@ -57,12 +57,7 @@ def get_msg():
     )
     row = cursor.fetchone()
     if row:
-        return Message(
-            msg_id=row[0],
-            status=row[1],
-            text=row[2],
-            name=row[3],
-        )
+        return Message(msg_id=row[0], status=row[1], text=row[2], name=row[3],)
     close(connection)
 
 
@@ -70,17 +65,10 @@ def list_msgs():
     connection, cursor = connect()
     cursor.execute("SELECT id, status, text, name FROM message_queue")
     rows = cursor.fetchall()
-    if rows:
-        return [
-            Message(
-                msg_id=row[0],
-                status=row[1],
-                text=row[2],
-                name=row[3],
-            )
-            for row in rows
-        ]
     close(connection)
+    return [
+        Message(msg_id=row[0], status=row[1], text=row[2], name=row[3],) for row in rows
+    ]
 
 
 def close(connection):
@@ -93,14 +81,15 @@ def setup():
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS message_queue (
-        id serial PRIMARY KEY,
-        status varchar(256) NOT NULL,
-        text varchar(256) NOT NULL,
-        name varchar(256) NOT NULL
+            id serial PRIMARY KEY,
+            status varchar(256) NOT NULL,
+            text varchar(256) NOT NULL,
+            name varchar(256) NOT NULL
         )
         """
     )
     close(connection)
 
 
-setup()
+if DATABASE_URL:
+    setup()

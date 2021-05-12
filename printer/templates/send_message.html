@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Receipt Printer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link rel="shortcut icon" href="printer.ico" />
+    <style>
+      html {
+        background: #008080;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">Print Prompt</div>
+        <div class="title-bar-controls">
+          <a href="https://github.com/healeycodes/pi">
+            <button aria-label="Help"></button>
+          </a>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>
+          I've finally hooked up the receipt printer in our living room to the
+          world wide web!
+        </p>
+        <p>
+          Now your thoughts can ride the information highway right into our
+          flat.
+        </p>
+        <p id="message-count"></p>
+        <form action="/printer/put-msg" method="get">
+          <div class="field-row-stacked" style="width: 200px">
+            <textarea id="text20" rows="8"></textarea>
+          </div>
+          <button style="margin-top: 1em" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">My POS58</div>
+      </div>
+      <div class="window-body">
+        <img src="static/in-action.gif" style="width: 234px; height: 234px" />
+        <p>
+          A joyful 58mm USB thermal receipt printer. Hooked up to a Raspberry
+          Pi.
+        </p>
+      </div>
+    </div>
+    <script src="static/js/sendMessage.js"></script>
+  </body>
+</html>
