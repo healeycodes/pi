@@ -1,9 +1,9 @@
 const msgID = document.querySelector("#msg-id").dataset.msgId;
 const animation = document.querySelector("#animation");
 
-animation.innerHTML = "waiting for printer";
+animation.innerHTML = "<p>waiting for printer</p>";
 function checkStatus() {
-  animation.innerHTML += "<br>...";
+  animation.innerHTML += "<p>...</p>";
   fetch(`check-msg?msg_id=${msgID}`)
     .then((res) => res.json())
     .then((json) => {
@@ -11,8 +11,7 @@ function checkStatus() {
         setTimeout(checkStatus, 1000);
       } else {
         animation.innerHTML +=
-          json.status +
-          '<br><p><a href="/"><button>Print another</button></a></p>';
+          json.status + '<p><a href="/"><button>Print another</button></a></p>';
       }
     });
 }
