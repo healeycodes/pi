@@ -33,7 +33,7 @@ You'll need a Raspberry Pi connected to the internet with a POS58 receipt printe
 ```
 cd client/
 pip install -r requirements.txt
-python python poller.py https://your-url.herokuapp.com password_here 
+sudo python3 poller.py https://your-url.herokuapp.com password_here 
 ```
 
 I run that last command on boot via `/etc/rc.local`.
