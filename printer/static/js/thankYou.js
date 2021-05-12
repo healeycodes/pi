@@ -8,10 +8,11 @@ function checkStatus() {
     .then((res) => res.json())
     .then((json) => {
       if (!json.status.includes("printed")) {
-        setTimeout(checkStatus, 500);
+        setTimeout(checkStatus, 1000);
       } else {
         animation.innerHTML +=
-          json.status + '<p><a href="/"><button>Print another</button></a></p>';
+          json.status +
+          '<br><p><a href="/"><button>Print another</button></a></p>';
       }
     });
 }
