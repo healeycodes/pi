@@ -13,7 +13,9 @@ from datetime import datetime
 URL = sys.argv[1]
 PW = sys.argv[2]
 
-t = lambda _: f"{datetime.now()}"
+
+def t():
+    return f"{datetime.now()}"
 
 
 def get_message():
