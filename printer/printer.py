@@ -33,7 +33,6 @@ def index():
 
 
 @bp.route("/put-msg")
-@auth
 def put_msg():
     text = request.args.get("text")
     if "X-Forwarded-For" in request.headers:
