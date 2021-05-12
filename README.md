@@ -6,13 +6,7 @@ The first add-on is a POS58 receipt printer that accepts messages via HTTP.
 
 This is so friends and family (and presumably spam bots too since I haven't hidden the URL) can ping me their thoughts.
 
-![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.jpeg)
-
-`/printer/put-msg?text=Hello` – print a message.
-
-`/printer/check-msg?id=1` – check the status of a message (has it been printed yet?).
-
-`/printer/get-msg?password=example` – get the oldest unprinted message (password protected).
+![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.png)
 
 The messages end up in a queue built on PostgreSQL. Calling it a 'queue' is probably too generous. They're printed in order – let's leave it at that.
 
