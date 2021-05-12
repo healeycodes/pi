@@ -23,9 +23,9 @@ def get_message():
         r = requests.get(f"{URL}/printer/get-msg?password={PW}")
         if r.status_code == 200:
             msg = r.json()
-            print(f"{t()} get_message - printing: {msg.text}")
-            pos58.output(msg.text)
-            confirm_message(msg.msg_id)
+            print(f"{t()} get_message - printing: {msg['text']}")
+            pos58.output(msg["text"])
+            confirm_message(msg["msg_id"])
         elif r.status_code == 204:
             print(f"{t()} get_message - no new messages")
         else:
