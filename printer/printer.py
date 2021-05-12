@@ -47,18 +47,18 @@ def put_msg():
 
 @bp.route("/check-msg")
 def check_msg():
-    msg_id = request.args.get("id")
+    msg_id = request.args.get("msg_id")
 
     status = messages.check_msg(msg_id)
     if status:
         return jsonify({"status": status})
-    return "No message by that id :(", 404
+    return "No message by that msg_id :(", 404
 
 
 @bp.route("/confirm-msg")
 @auth
 def confirm_msg():
-    msg_id = request.args.get("id")
+    msg_id = request.args.get("msg_id")
     messages.update_msg_status(msg_id, f"printed at {datetime.now()}")
     return "", 200
 
