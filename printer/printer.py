@@ -40,7 +40,7 @@ def put_msg():
     else:
         name = request.remote_addr or "untrackable"
     if text:
-        return jsonify({"msg_id": messages.put_msg(text, name)})
+        render_template("thank_you.html", msg_id=messages.put_msg(text, name))
     else:
         return 'Missing query parameter of "text" :(', 400
 
@@ -66,7 +66,7 @@ def confirm_msg():
 @bp.route("/get-msg")
 @auth
 def get_msg():
-    msg = messages.get_msg()
+    msg = messages.get_msgs()
     if msg:
         return jsonify({"msg_id": msg.msg_id, "text": msg.text, "name": msg.name})
     return "", 204

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Receipt Printer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link rel="shortcut icon" href="printer.ico" />
+    <style>
+      html {
+        background: #008080;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">Thank You</div>
+        <div class="title-bar-controls">
+          <a href="https://github.com/healeycodes/pi">
+            <button aria-label="Help"></button>
+          </a>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Print request received</p>
+        <p id="animation"></p>
+      </div>
+    </div>
+    <div id="msg_id" data-msg-id="{{msg_id}}"></div>
+    <script src="static/js/thankYou.js"></script>
+  </body>
+</html>

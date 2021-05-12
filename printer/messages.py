@@ -50,7 +50,7 @@ def check_msg(msg_id):
         return row[0]
 
 
-def get_msg():
+def get_msgs():
     connection, cursor = connect()
     cursor.execute(
         "SELECT id, status, text, name FROM message_queue WHERE status LIKE 'queued%' LIMIT 1"
