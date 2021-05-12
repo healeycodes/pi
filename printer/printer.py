@@ -68,7 +68,7 @@ def confirm_msg():
 def get_msg():
     msg = messages.get_msg()
     if msg:
-        return jsonify({"text": msg.text, "name": msg.name})
+        return jsonify({"msg_id": msg.msg_id, "text": msg.text, "name": msg.name})
     return "", 204
 
 
