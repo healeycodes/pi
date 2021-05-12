@@ -43,7 +43,7 @@ def update_msg_status(msg_id, status):
 
 def check_msg(msg_id):
     connection, cursor = connect()
-    cursor.execute("SELECT status FROM message_queue WHERE id=%s", (msg_id))
+    cursor.execute("SELECT status FROM message_queue WHERE id=%s", msg_id)
     row = cursor.fetchone()
     close(connection)
     if row:
