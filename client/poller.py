@@ -48,5 +48,7 @@ def confirm_message(msg_id):
 
 while True:
     now = datetime.now().hour
-    get_message()
+    # sleep to save on Heroku dyno hours
+    if now > 7 and now < 22:
+        get_message()
     time.sleep(5)
