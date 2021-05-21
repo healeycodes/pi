@@ -1,7 +1,8 @@
 import os
+import dataclasses
 from functools import wraps
-from mods.printer import messages
 from datetime import datetime
+from mods.printer import messages
 from flask import Blueprint, request, jsonify, abort, render_template
 
 PW = os.environ["PRINTER_PW"] if "PRINTER_PW" in os.environ else None
@@ -82,4 +83,4 @@ def count_msgs():
 @bp.route("/list-msgs")
 @auth
 def list_msgs():
-    return jsonify({"msgs": messages})
+    return jsonify({"msgs": [dataclasses.asdict(msg) for msg in messages.get_msgs()]})
