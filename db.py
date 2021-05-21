@@ -1,23 +1,23 @@
 import os
 
+"""
+We use sqlite3 locally but postgresql on the dyno.
+"""
+
 DATABASE_URL = os.environ["DATABASE_URL"] if "DATABASE_URL" in os.environ else None
 
-if not DATABASE_URL:
-    import psycopg2
 
-    def connect():
+def connect():
+    if DATABASE_URL:
+        import psycopg2
+
         connection = psycopg2.connect(DATABASE_URL, sslmode="require")
-        cursor = connection.cursor()
-        return connection, cursor
+    else:
+        import sqlite3
 
-
-else:
-    import sqlite3
-
-    def connect():
         connection = sqlite3.connect("dev.db")
-        cursor = connection.cursor()
-        return connection, cursor
+    cursor = connection.cursor()
+    return connection, cursor
 
 
 def close(connection):

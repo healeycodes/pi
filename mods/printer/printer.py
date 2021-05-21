@@ -1,6 +1,6 @@
 import os
 from functools import wraps
-from printer import messages
+from mods.printer import messages
 from datetime import datetime
 from flask import Blueprint, request, jsonify, abort, render_template
 
@@ -40,7 +40,9 @@ def put_msg():
     else:
         name = request.remote_addr or "untrackable"
     if text:
-        return render_template("thank_you.html", msg_id=messages.put_msg(text, name))
+        return render_template(
+            "thank_you.html", msg_id=messages.put_msg(text, name).msg_id
+        )
     else:
         return 'Missing query parameter of "text" :(', 400
 
@@ -49,7 +51,7 @@ def put_msg():
 def check_msg():
     msg_id = request.args.get("msg_id")
 
-    status = messages.check_msg(msg_id)
+    status = messages.check_msg(msg_id).status
     if status:
         return jsonify({"status": status})
     return "No message by that msg_id :(", 404
@@ -80,4 +82,4 @@ def count_msgs():
 @bp.route("/list-msgs")
 @auth
 def list_msgs():
-    return jsonify({"msgs": messages.list_msgs()})
+    return jsonify({"msgs": messages})
