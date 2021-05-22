@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 
 
-def satellites_thread(URL, PW):
+def sky_thread(URL, PW):
     def t():
         return f"{datetime.now()}"
 

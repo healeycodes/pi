@@ -8,10 +8,10 @@ if CONFIG.printer:
     from mods.printer import printer
 
     app.register_blueprint(printer.bp)
-if CONFIG.satellites:
-    from mods.satellites import satellites
+if CONFIG.sky:
+    from mods.sky import sky
 
-    app.register_blueprint(satellites.bp)
+    app.register_blueprint(sky.bp)
 
 
 @app.route("/")

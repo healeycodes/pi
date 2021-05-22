@@ -1,3 +1,3 @@
 class CONFIG:
     printer = True
-    satellites = True
+    sky = True
