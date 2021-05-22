@@ -37,6 +37,13 @@ def setup():
         )
         """
     )
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS satellites (
+            current varchar(2048)
+        )
+        """
+    )
     close(connection)
 
 
