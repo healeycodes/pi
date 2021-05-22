@@ -1,0 +1,74 @@
+import json
+from re import S
+from db import connect, close
+from datetime import datetime
+from dataclasses import dataclass
+
+# scraped on 21/05/2021 from Wikipedia
+PRN_DESCRIPTIONS = {
+    "13": "USA-132",
+    "20": "USA-150",
+    "28": "USA-151",
+    "16": "USA-166",
+    "21": "USA-168",
+    "22": "USA-175",
+    "19": "USA-177",
+    "02": "USA-180",
+    "17": "USA-183",
+    "31": "USA-190",
+    "12": "USA-192",
+    "15": "USA-196",
+    "29": "USA-199",
+    "07": "USA-201",
+    "05": "USA-206",
+    "25": "USA-213",
+    "01": "USA-232",
+    "24": "USA-239",
+    "27": "USA-242",
+    "30": "USA-248",
+    "06": "USA-251",
+    "09": "USA-256",
+    "03": "USA-258",
+    "26": "USA-260",
+    "08": "USA-262",
+    "10": "USA-265",
+    "32": "USA-266",
+    "04": "USA-289 Vespucci",
+    "18": "USA-293 Magellan",
+    "23": "USA-304 Matthew Henson",
+    "14": "USA-309 Sacagawea",
+}
+
+
+@dataclass
+class Satellite:
+    prn: str
+    description: str
+    status: int
+
+
+def save_sats(sats):
+    # TODO: optimize this SQL once we've settled on a SQL language
+    connection, cursor = connect()
+    cursor.execute("UPDATE satellites SET status=0")
+    for prn in sats:
+        cursor.execute("SELECT prn FROM satellites WHERE prn=? LIMIT 1", (prn,))
+        if not cursor.fetchone():
+            desc = PRN_DESCRIPTIONS[prn] if prn in PRN_DESCRIPTIONS else "Unknown"
+            cursor.execute(
+                "INSERT INTO satellites (prn, status, description) VALUES (?, ?, ?)",
+                (prn, 1, desc,),
+            )
+        else:
+            cursor.execute(
+                "UPDATE satellites SET status=1 WHERE prn=?", (prn,),
+            )
+    close(connection)
+
+
+def get_sats():
+    connection, cursor = connect()
+    cursor.execute("SELECT prn, description, status FROM satellites")
+    rows = cursor.fetchall()
+    close(connection)
+    return [Satellite(prn=row[0], description=row[1], status=row[2],) for row in rows]

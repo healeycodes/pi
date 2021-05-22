@@ -40,7 +40,9 @@ def setup():
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS satellites (
-            current varchar(2048)
+            prn varchar(128),
+            status INTEGER,
+            description varchar(2048)
         )
         """
     )

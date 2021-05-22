@@ -25,7 +25,7 @@ for idx, status in enumerate(statuses):
         # trim footnote markers
         valid[prns[idx]] = names[idx]
 
-path = "data/satellites.json"
+path = "satellites.json"
 if os.path.exists(path):
     os.remove(path)
 with open(path, "w") as f:

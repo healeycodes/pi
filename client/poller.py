@@ -1,4 +1,3 @@
-from client.sky import sky_thread
 import sys
 import threading
 from config import CONFIG
@@ -7,8 +6,8 @@ from sky import sky_thread
 
 """
 Point this program to your server e.g. "python poller.py https://your-url.herokuapp.com password_here"
-                                                         (Note: no trailing slash     ^)
-I start in the background via .bashrc
+                                                          (Note: no trailing slash     ^)
+I start it in the background via .bashrc
 """
 
 URL = sys.argv[1]

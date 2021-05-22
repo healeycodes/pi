@@ -1,8 +1,7 @@
 import os
-import dataclasses
 from functools import wraps
-from datetime import datetime
-from flask import Blueprint, request, jsonify, abort, render_template
+from mods.sky.satellites import save_sats, get_sats
+from flask import Blueprint, request, jsonify, abort
 
 PW = os.environ["PRINTER_PW"] if "PRINTER_PW" in os.environ else None
 bp = Blueprint(
@@ -29,7 +28,12 @@ def auth(view):
 
 @bp.route("/send")
 @auth
-def confirm_msg():
+def send_satellites():
     sats = request.args.get("sats")
-    print(sats)
+    save_sats(sats.split(","))
     return "", 200
+
+
+@bp.route("/get")
+def get_satellites():
+    return jsonify(get_sats())
