@@ -52,16 +52,16 @@ def save_sats(sats):
     connection, cursor = connect()
     cursor.execute("UPDATE satellites SET status=0")
     for prn in sats:
-        cursor.execute("SELECT prn FROM satellites WHERE prn=? LIMIT 1", (prn,))
+        cursor.execute("SELECT prn FROM satellites WHERE prn=%s LIMIT 1", (prn,))
         if not cursor.fetchone():
             desc = PRN_DESCRIPTIONS[prn] if prn in PRN_DESCRIPTIONS else "Unknown"
             cursor.execute(
-                "INSERT INTO satellites (prn, status, description) VALUES (?, ?, ?)",
+                "INSERT INTO satellites (prn, status, description) VALUES (%s, %s, %s)",
                 (prn, 1, desc,),
             )
         else:
             cursor.execute(
-                "UPDATE satellites SET status=1 WHERE prn=?", (prn,),
+                "UPDATE satellites SET status=1 WHERE prn=%s", (prn,),
             )
     close(connection)
 

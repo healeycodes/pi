@@ -15,7 +15,7 @@ def put_msg(text, name):
     status = f"queued at {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
-        "INSERT INTO message_queue (status, text, name) VALUES (?, ?, ?) RETURNING id",
+        "INSERT INTO message_queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
         (status, text, name),
     )
     msg_id = cursor.fetchone()[0]
@@ -25,14 +25,14 @@ def put_msg(text, name):
 
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
-    cursor.execute("UPDATE message_queue set status=? WHERE id=?", (status, msg_id))
+    cursor.execute("UPDATE message_queue set status=%s WHERE id=%s", (status, msg_id))
     close(connection)
 
 
 def check_msg(msg_id):
     connection, cursor = connect()
     cursor.execute(
-        "SELECT id, status, text, name FROM message_queue WHERE id=?", (msg_id,)
+        "SELECT id, status, text, name FROM message_queue WHERE id=%s", (msg_id,)
     )
     row = cursor.fetchone()
     close(connection)
