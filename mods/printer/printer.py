@@ -42,7 +42,7 @@ def put_msg():
         name = request.remote_addr or "untrackable"
     if text:
         return render_template(
-            "thank_you.html", msg_id=messages.put_msg(text, name).msg_id
+            "thank_you.html", msg_id=messages.put_msg(text, name)
         )
     else:
         return 'Missing query parameter of "text" :(', 400

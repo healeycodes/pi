@@ -18,9 +18,9 @@ def put_msg(text, name):
         "INSERT INTO message_queue (status, text, name) VALUES (%s, %s, %s) RETURNING id",
         (status, text, name),
     )
-    msg = Message(msg_id=cursor.fetchone()[0],)
+    msg_id=cursor.fetchone()[0]
     close(connection)
-    return msg
+    return msg_id
 
 
 def update_msg_status(msg_id, status):
