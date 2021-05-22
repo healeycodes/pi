@@ -1,6 +1,6 @@
 import sys
 import threading
-from ..mods import CONFIG
+from config import CONFIG
 from printer import printer_thread
 from satellites import satellites_thread
 

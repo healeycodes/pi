@@ -1,11 +1,17 @@
+from config import CONFIG
 from flask import Flask, redirect
 
-from mods.printer import printer
-from mods.satellites import satellites
 
 app = Flask(__name__)
-app.register_blueprint(printer.bp)
-app.register_blueprint(satellites.bp)
+
+if CONFIG.printer:
+    from mods.printer import printer
+
+    app.register_blueprint(printer.bp)
+if CONFIG.satellites:
+    from mods.satellites import satellites
+
+    app.register_blueprint(satellites.bp)
 
 
 @app.route("/")
