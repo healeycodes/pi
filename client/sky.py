@@ -45,11 +45,10 @@ def sky_thread(URL, PW):
 
             # wait until we reach the latest info
             if end > 0.1:
-                print(gpsd.data)
-
                 # check that it has the satellite data
                 # as opposed to lat/long data i.e. 'TPV'
                 if "SKY" in gpsd.data:
+                    print(gpsd.data)
                     break
 
         now = datetime.now().hour
