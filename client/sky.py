@@ -17,7 +17,7 @@ def sky_thread(URL, PW):
     def send_sats():
         try:
             print(f"{t()} send_sats - gpsd.data: {gpsd.data}")
-            
+
             sats = set()
             if "satellites" not in gpsd.data:
                 return
@@ -26,7 +26,9 @@ def sky_thread(URL, PW):
                 sats.add(sat["PRN"])
 
             print(f"{t()} send_sats - found: {sats}")
-            sats = ",".join([str(sat) for sat in sats])
+
+            # PRNs are always two digits
+            sats = ",".join([str(sat).zfill(2) for sat in sats])
         except Exception as err:
             print(f"{t()} send_sats - looking error .. {err}")
             return
