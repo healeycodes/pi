@@ -44,10 +44,13 @@ def sky_thread(URL, PW):
             end = time.time() - start
 
             # wait until we reach the latest info
-            # and check that it has the satellite data
-            # as opposed to lat/long data i.e. 'TPV'
-            if end > 0.5 and "SKY" in gpsd.data:
-                break
+            if end > 0.5:
+                print(gpsd.data)
+
+                # check that it has the satellite data
+                # as opposed to lat/long data i.e. 'TPV'
+                if "SKY" in gpsd.data:
+                    break
 
         now = datetime.now().hour
         # sleep to save on Heroku dyno hours
