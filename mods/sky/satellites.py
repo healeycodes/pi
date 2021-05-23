@@ -1,10 +1,8 @@
-import json
-from re import S
 from db import connect, close
 from datetime import datetime
 from dataclasses import dataclass
 
-# scraped on 21/05/2021 from Wikipedia
+# https://en.wikipedia.org/wiki/List_of_GPS_satellites
 PRN_DESCRIPTIONS = {
     "13": "USA-132",
     "20": "USA-150",
@@ -45,6 +43,7 @@ class Satellite:
     prn: str
     description: str
     status: int
+    timestamp: str
 
 
 def save_sats(sats):
@@ -56,19 +55,28 @@ def save_sats(sats):
         if not cursor.fetchone():
             desc = PRN_DESCRIPTIONS[prn] if prn in PRN_DESCRIPTIONS else "Unknown"
             cursor.execute(
-                "INSERT INTO satellites (prn, status, description) VALUES (%s, %s, %s)",
-                (prn, 1, desc,),
+                "INSERT INTO satellites (prn, status, description, timestamp) VALUES (%s, %s, %s, %s)",
+                (
+                    prn,
+                    1,
+                    desc,
+                    datetime.now(),
+                ),
             )
         else:
             cursor.execute(
-                "UPDATE satellites SET status=1 WHERE prn=%s", (prn,),
+                "UPDATE satellites SET status=1  WHERE prn=%s",
+                (prn,),
             )
     close(connection)
 
 
 def get_sats():
     connection, cursor = connect()
-    cursor.execute("SELECT prn, description, status FROM satellites")
+    cursor.execute("SELECT prn, description, status, timestamp FROM satellites")
     rows = cursor.fetchall()
     close(connection)
-    return [Satellite(prn=row[0], description=row[1], status=row[2],) for row in rows]
+    return [
+        Satellite(prn=row[0], description=row[1], status=row[2], timestamp=row[3])
+        for row in rows
+    ]

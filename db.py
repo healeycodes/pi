@@ -33,7 +33,8 @@ def setup():
             id serial PRIMARY KEY,
             status varchar(256) NOT NULL,
             text varchar(256) NOT NULL,
-            name varchar(256) NOT NULL
+            name varchar(256) NOT NULL,
+            timestamp varchar(256) NOT NULL
         )
         """
     )
@@ -42,7 +43,8 @@ def setup():
         CREATE TABLE IF NOT EXISTS satellites (
             prn varchar(128),
             status INTEGER,
-            description varchar(2048)
+            description varchar(2048),
+            timestamp varchar(256) NOT NULL
         )
         """
     )
