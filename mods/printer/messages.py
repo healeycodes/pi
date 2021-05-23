@@ -26,7 +26,10 @@ def put_msg(text, name):
 
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
-    cursor.execute("UPDATE message_queue set status=%s WHERE id=%s", (status, msg_id))
+    cursor.execute(
+        "UPDATE message_queue set status=%s, timestamp=%s WHERE id=%s",
+        (status, datetime.now(), msg_id),
+    )
     close(connection)
 
 
