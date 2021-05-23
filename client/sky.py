@@ -36,24 +36,28 @@ def sky_thread(URL, PW):
         except Exception as err:
             print(f"{t()} send_sats - sending error .. {err}")
 
-    while True:
-        # the gpsd can be out of date
+    def sync_gpsd():
+        # gpsd buffer can be out of date
         while True:
             start = time.time()
             gpsd.next()
             end = time.time() - start
 
-            # wait until we reach the latest info
-            if end > 0.1:
+            # find the latest info
+            # (a 'slow' update means the data is real time)
+            if end > 0.25:
                 # check that it has the satellite data
                 # as opposed to lat/long data i.e. 'TPV'
-                if "SKY" in gpsd.data:
-                    print(gpsd.data)
-                    break
+                while True:
+                    if "SKY" in gpsd.data:
+                        return
+                    gpsd.next()
 
+    while True:
         now = datetime.now().hour
         # sleep to save on Heroku dyno hours
         if now > 7 and now < 22:
+            sync_gpsd()
             send_sats()
 
         time.sleep(10)
