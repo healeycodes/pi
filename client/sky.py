@@ -47,4 +47,13 @@ def sky_thread(URL, PW):
         # sleep to save on Heroku dyno hours
         if now > 7 and now < 22:
             send_sats()
-        time.sleep(10)
+
+        # poll gpsd more often than the reporting time so the buffer doesn't
+        # get outdated or fill up
+        while True:
+            start = time.time()
+            gpsd.next()
+            end = time.time() - start
+            print(end)
+            if end > 0.5:
+                break
