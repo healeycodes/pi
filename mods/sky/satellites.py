@@ -49,7 +49,7 @@ class Satellite:
 def save_sats(sats):
     # TODO: optimize this SQL once we've settled on a SQL language
     connection, cursor = connect()
-    cursor.execute("UPDATE satellites SET status=0")
+    cursor.execute("UPDATE satellites SET status=0, timestamp=%s", (datetime.now(),))
     for prn in sats:
         cursor.execute("SELECT prn FROM satellites WHERE prn=%s LIMIT 1", (prn,))
         if not cursor.fetchone():
@@ -65,8 +65,11 @@ def save_sats(sats):
             )
         else:
             cursor.execute(
-                "UPDATE satellites SET status=1  WHERE prn=%s",
-                (prn,),
+                "UPDATE satellites SET status=1, timestamp=%s WHERE prn=%s",
+                (
+                    datetime.now(),
+                    prn,
+                ),
             )
     close(connection)
 

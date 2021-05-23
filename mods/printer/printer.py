@@ -1,11 +1,9 @@
-import os
 import dataclasses
-from functools import wraps
+from common import auth
 from datetime import datetime
 from mods.printer import messages
-from flask import Blueprint, request, jsonify, abort, render_template
+from flask import Blueprint, request, jsonify, render_template
 
-PW = os.environ["PRINTER_PW"] if "PRINTER_PW" in os.environ else None
 bp = Blueprint(
     "printer",
     __name__,
@@ -13,19 +11,6 @@ bp = Blueprint(
     template_folder="templates",
     static_folder="static",
 )
-
-
-def auth(view):
-    @wraps(view)
-    def check_pw(*args, **kwargs):
-        # TODO: this is vulnerable to a timing attack
-        password = request.args.get("password")
-        if password != PW:
-            abort(401)
-        else:
-            return view(*args, **kwargs)
-
-    return check_pw
 
 
 @bp.route("/")
@@ -41,9 +26,7 @@ def put_msg():
     else:
         name = request.remote_addr or "untrackable"
     if text:
-        return render_template(
-            "thank_you.html", msg_id=messages.put_msg(text, name)
-        )
+        return render_template("thank_you.html", msg_id=messages.put_msg(text, name))
     else:
         return 'Missing query parameter of "text" :(', 400
 

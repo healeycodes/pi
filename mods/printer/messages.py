@@ -1,4 +1,3 @@
-from sqlite3.dbapi2 import Timestamp
 from db import connect, close
 from datetime import datetime
 from dataclasses import dataclass
