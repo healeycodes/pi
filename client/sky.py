@@ -17,10 +17,13 @@ def sky_thread(URL, PW):
     def send_sats():
         try:
             print(f"{t()} send_sats - gpsd.data: {gpsd.data}")
+            
             sats = set()
-            if "satellites" in gpsd.data:
-                for sat in gpsd.data["satellites"]:
-                    sats.add(sat["PRN"])
+            if "satellites" not in gpsd.data:
+                return
+
+            for sat in gpsd.data["satellites"]:
+                sats.add(sat["PRN"])
 
             print(f"{t()} send_sats - found: {sats}")
             sats = ",".join([str(sat) for sat in sats])
@@ -49,7 +52,7 @@ def sky_thread(URL, PW):
                 # check that it has the satellite data
                 # as opposed to lat/long data i.e. 'TPV'
                 while True:
-                    if "SKY" in gpsd.data:
+                    if "satellites" in gpsd.data:
                         return
                     gpsd.next()
 
