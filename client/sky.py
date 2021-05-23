@@ -32,7 +32,7 @@ def sky_thread(URL, PW):
 
         try:
             print(f"{t()} send_sats - sending: {sats}")
-            r = requests.get(f"{URL}/satellites/send?sats={sats}&password={PW}")
+            r = requests.get(f"{URL}/sky/send?sats={sats}&password={PW}")
             if r.status_code != 200:
                 print(f"{t()} send_sats - .. status code: {r.status_code}: {r.text}")
         except Exception as err:
