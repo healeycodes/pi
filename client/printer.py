@@ -41,4 +41,4 @@ def printer_thread(URL, PW):
         # sleep to save on Heroku dyno hours
         if now > 7 and now < 22:
             get_message()
-        time.sleep(5)
+        time.sleep(10)
