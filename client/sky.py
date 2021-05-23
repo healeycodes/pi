@@ -26,6 +26,7 @@ def sky_thread(URL, PW):
             sats = ",".join([str(sat) for sat in sats])
         except Exception as err:
             print(f"{t()} send_sats - looking error .. {err}")
+            return
 
         try:
             print(f"{t()} send_sats - sending: {sats}")
@@ -36,17 +37,21 @@ def sky_thread(URL, PW):
             print(f"{t()} send_sats - sending error .. {err}")
 
     while True:
-        now = datetime.now().hour
-        # sleep to save on Heroku dyno hours
-        if now > 7 and now < 22:
-            send_sats()
-            time.sleep(10)
-
-        # poll gpsd more often than the reporting time so the buffer doesn't
-        # get outdated or fill up
+        # the gpsd can be out of date
         while True:
             start = time.time()
             gpsd.next()
             end = time.time() - start
+
+            # wait until we reach the latest info
+            # and check that it has the satellite data
+            # as opposed to lat/long data i.e. 'TPV'
             if end > 0.5 and "SKY" in gpsd.data:
                 break
+
+        now = datetime.now().hour
+        # sleep to save on Heroku dyno hours
+        if now > 7 and now < 22:
+            send_sats()
+
+        time.sleep(10)
