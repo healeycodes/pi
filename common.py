@@ -8,7 +8,7 @@ def auth(view):
     def check_pw(*args, **kwargs):
         # TODO: this is vulnerable to a timing attack
         password = request.args.get("password")
-        PW = os.environ["PRINTER_PW"] if "PRINTER_PW" in os.environ else None
+        PW = os.environ["PW"] if "PW" in os.environ else None
         if password != PW:
             abort(401)
         else:
