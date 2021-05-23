@@ -1,6 +1,6 @@
 import time
 import requests
-from lib import pos58
+import pos58
 from datetime import datetime
 
 
