@@ -1,3 +1,4 @@
+from common import auth
 from mods.sky.satellites import save_sats, get_sats
 from flask import Blueprint, request, jsonify
 

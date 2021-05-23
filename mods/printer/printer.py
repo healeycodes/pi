@@ -1,5 +1,5 @@
-import os
 import dataclasses
+from common import auth
 from datetime import datetime
 from mods.printer import messages
 from flask import Blueprint, request, jsonify, render_template
