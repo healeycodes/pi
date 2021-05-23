@@ -44,7 +44,7 @@ def sky_thread(URL, PW):
             end = time.time() - start
 
             # wait until we reach the latest info
-            if end > 0.5:
+            if end > 0.1:
                 print(gpsd.data)
 
                 # check that it has the satellite data
