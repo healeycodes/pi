@@ -15,21 +15,14 @@ def sky_thread(URL, PW):
         return f"{datetime.now()}"
 
     def send_sats():
-        print(f"{t()} send_sats - looking..")
         try:
-            gpsd.next()
             print(f"{t()} send_sats - gpsd.data: {gpsd.data}")
-
             sats = set()
             if "satellites" in gpsd.data:
                 for sat in gpsd.data["satellites"]:
                     sats.add(sat["PRN"])
 
-            # if none are found it's probably a gpsd<->python problem
-            if len(sats) == 0:
-                print(f"{t()} send_sats - zero sats found")
-                return
-
+            print(f"{t()} send_sats - found: {sats}")
             sats = ",".join([str(sat) for sat in sats])
         except Exception as err:
             print(f"{t()} send_sats - looking error .. {err}")
@@ -55,6 +48,5 @@ def sky_thread(URL, PW):
             start = time.time()
             gpsd.next()
             end = time.time() - start
-            print(end)
-            if end > 0.5:
+            if end > 0.5 and "SKY" in gpsd.data:
                 break
