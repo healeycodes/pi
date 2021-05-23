@@ -10,6 +10,7 @@ def sky_thread(URL, PW):
         return f"{datetime.now()}"
 
     def send_sats():
+        print(f"{t()} send_sats - looking..")
         gpsd = gps.gps(mode=gps.WATCH_ENABLE)
         sats = set()
         for _ in range(0, 10):
