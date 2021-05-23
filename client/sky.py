@@ -21,9 +21,10 @@ def sky_thread(URL, PW):
                         sats.add(sat["PRN"])
                 time.sleep(1)
 
-            # if none are found it's probably a gpsd sync problem
+            # if none are found it's probably a gpsd<->python problem
             if len(sats) == 0:
-                return send_sats()
+                print(f"{t()} send_sats - zero sats found")
+                return
 
             sats = ",".join([str(sat) for sat in sats])
         except Exception as err:
