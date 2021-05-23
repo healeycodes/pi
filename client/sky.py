@@ -19,7 +19,7 @@ def sky_thread(URL, PW):
                     sats.add(sat["PRN"])
             time.sleep(1)
 
-        sats = ",".join(list(sats))
+        sats = ",".join([str(sat) for sat in sats])
 
         try:
             print(f"{t()} send_sats - sending: {sats}")
