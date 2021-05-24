@@ -37,7 +37,7 @@ def weather_thread(URL, PW):
         try:
             print(f"{t()} send_weather - sending: {(temperature, humidity)}")
             r = requests.get(
-                f"{URL}/weather/send?temperature={temperature}&humidity={humidity}password={PW}"
+                f"{URL}/weather/send?temperature={temperature}&humidity={humidity}&password={PW}"
             )
             if r.status_code != 200:
                 print(f"{t()} send_weather - .. status code: {r.status_code}: {r.text}")
