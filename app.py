@@ -7,10 +7,16 @@ if CONFIG.printer:
     from mods.printer import printer
 
     app.register_blueprint(printer.bp)
+
 if CONFIG.sky:
     from mods.sky import sky
 
     app.register_blueprint(sky.bp)
+
+if CONFIG.weather:
+    from mods.weather import weather
+
+    app.register_blueprint(weather.bp)
 
 
 @app.route("/")

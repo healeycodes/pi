@@ -56,4 +56,4 @@ def weather_thread(URL, PW):
 
 
 if __name__ == "__main__":
-    weather_thread()
+    weather_thread("_", "_")

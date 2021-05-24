@@ -41,9 +41,20 @@ def setup():
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS satellites (
+            id serial PRIMARY KEY,
             prn varchar(128),
             status INTEGER,
             description varchar(2048),
+            timestamp varchar(256) NOT NULL
+        )
+        """
+    )
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS weather (
+            id serial PRIMARY KEY,
+            temperature varchar(128),
+            humidity varchar(128),
             timestamp varchar(256) NOT NULL
         )
         """
