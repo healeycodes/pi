@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pi - Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link
+      rel="shortcut icon"
+      href="static/network_internet_pcs_installer.ico"
+    />
+    <style>
+      html {
+        background: #008080;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">Home</div>
+        <div class="title-bar-controls">
+          <a href="https://github.com/healeycodes/pi">
+            <button aria-label="Help"></button>
+          </a>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>
+          Welcome and thanks for surfing by. You've reached the Healey Pi
+          dashboard.
+        </p>
+        <a href="https://github.com/healeycodes/pi"
+          ><button>Check it out on GitHub</button></a
+        >
+      </div>
+    </div>
+    {% if 'sky' in mods %}
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">GPS</div>
+      </div>
+      <div class="window-body">
+        <img src="static/img/gps-4.png" />
+        <p id="sky"></p>
+      </div>
+    </div>
+    {% endif %} {% if 'weather' in mods %}
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">Weather</div>
+      </div>
+      <div class="window-body">
+        <img src="static/img/tree-0.png" />
+        <p id="weather"></p>
+      </div>
+    </div>
+    {% endif %} {% if 'printer' in mods %}
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">Printer</div>
+      </div>
+      <div class="window-body">
+        <img src="static/img/printer-0.png" />
+        <p id="printer"></p>
+        <a href="/printer/"><button>Print a message</button></a>
+      </div>
+    </div>
+    {% endif %}
+    <script>
+      window.mods = {{ mods_json | safe }}
+    </script>
+    <script src="static/js/index.js"></script>
+  </body>
+</html>

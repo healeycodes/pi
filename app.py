@@ -18,10 +18,21 @@ if CONFIG.weather:
 
     app.register_blueprint(weather.bp)
 
+if CONFIG.home:
+    from mods.home import home
 
-@app.route("/")
-def index():
-    return redirect("/printer")
+    app.register_blueprint(home.bp)
+
+    @app.route("/")
+    def index():
+        return redirect("/home")
+
+
+else:
+
+    @app.route("/")
+    def index():
+        return "Alive but home module turned off.."
 
 
 if __name__ == "__main__":

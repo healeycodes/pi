@@ -9,7 +9,7 @@ Setup GPS w/ https://gitlab.com/gpsd/gpsd
 
 
 def sky_thread(URL, PW):
-    gpsd = gps.gps(mode=gps.WATCH_ENABLE)
+    gpsd = None
 
     def t():
         return f"{datetime.now()}"
@@ -62,7 +62,14 @@ def sky_thread(URL, PW):
         now = datetime.now().hour
         # sleep to save on Heroku dyno hours
         if now > 7 and now < 22:
+            if gpsd is None:
+                gpsd = gps.gps(mode=gps.WATCH_ENABLE)
             sync_gpsd()
             send_sats()
+        else:
+            if gpsd is not None:
+                # close when we rest for the night
+                gpsd.close()
+                gpsd = None
 
         time.sleep(10)
