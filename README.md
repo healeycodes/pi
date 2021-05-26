@@ -2,16 +2,18 @@
 
 This is the monorepo for my Raspberry Pi dashboard!
 
-![The dashboard home page with weather, printer, and sky modules enabled.](https://github.com/healeycodes/pi/blob/main/client/preview.png)
-
 A module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
-
-The completed modules so far:
 
 - :house: &nbsp; a Windows 98 themed dashboard.
 - :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware device.
 - :printer: &nbsp; receive printer messages to a POS58 compatible printer.
 - :thermometer: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
+
+<br>
+
+![The dashboard home page with weather, printer, and sky modules enabled.](https://github.com/healeycodes/pi/blob/main/client/preview.png)
+
+<br>
 
 ## Run
 
