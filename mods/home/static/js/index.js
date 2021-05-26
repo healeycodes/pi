@@ -6,11 +6,9 @@ if (window.mods.includes("weather")) {
     const data = await fetch("/weather/get");
     const json = await data.json();
 
-    const timestamp = new Date(json.timestamp);
-    const lastSeen = Math.round(
-      new Date().getTime() / 1000 - timestamp.getTime() / 1000
-    );
-    weather.innerHTML = `Weather data fresh as of ${lastSeen} seconds ago..<br />
+    weather.innerHTML = `Weather data fresh as of ${moment(
+      json.timestamp
+    ).fromNow()} seconds ago..<br />
     <ul>
       <li>Temperature: ${json.temperature.toFixed(1)}°C</li>
       <li>Humidity: ${json.humidity.toFixed(1)}°C</li>
@@ -18,6 +16,7 @@ if (window.mods.includes("weather")) {
   }
   update();
 }
+
 if (window.mods.includes("printer")) {
   const printer = document.querySelector("#printer");
   async function update() {
@@ -28,21 +27,23 @@ if (window.mods.includes("printer")) {
   }
   update();
 }
+
 if (window.mods.includes("sky")) {
   const sky = document.querySelector("#sky");
   async function update() {
     const data = await fetch("/sky/get");
     const json = await data.json();
 
-    let lastSeenMin = NaN;
+    let lastSeenMinDate = new Date(0);
     json.map((satellite) => {
-      const timestamp = new Date(satellite.timestamp);
-      const lastSeen = Math.round(
-        new Date().getTime() / 1000 - timestamp.getTime() / 1000
+      lastSeenMinDate = Math.min(
+        lastSeenMinDate,
+        new Date(satellite.timestamp)
       );
-      lastSeenMin = Math.min(lastSeenMin, lastSeen);
     });
-    sky.innerHTML = `Satellite data fresh as of ${lastSeenMin} seconds ago..<br />
+    sky.innerHTML = `Satellite data fresh as of ${moment(
+      lastSeenMinDate
+    ).fromNow()} seconds ago..<br />
     <ul>`;
 
     // Visible satellites first
