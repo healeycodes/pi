@@ -1,6 +1,6 @@
-# 🥧 pi dashboard
+# :pie: pi dashboard
 
-The monorepo to my Raspberry Pi dashboard! Containing the client code for the Pi and the server code that runs on a Heroku Dyno.
+This is the monorepo for my Raspberry Pi dashboard!
 
 ![The dashboard home page with weather, printer, and sky modules enabled.](https://github.com/healeycodes/pi/blob/main/client/preview.png)
 
@@ -8,21 +8,23 @@ A module system allows different features to be toggled on and off so you don't 
 
 The completed modules so far:
 
-- :evergreen_tree: live temperature/humidity collected from an AMxx compatible sensor.
-- :printer: receive printer messages to a POS58 compatible printer.
-- :satellite: view the list of visible GPS satellites from a GPS hardware module.
+- :evergreen_tree: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
+- :printer: &nbsp; receive printer messages to a POS58 compatible printer.
+- :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware module.
 
 ## Run
 
 #### Server
 
-Create a Heroku project.
+Toggle server modules in `config.py`.
 
-Add a PostgreSQL database via the GUI.
+1. Create a Heroku project.
 
-Add a config var of `PW` via GUI.
+2. Add a PostgreSQL database via the GUI.
 
-Deploy from this GitHub repository.
+3. Add a config var of `PW` via GUI.
+
+4. Deploy from this GitHub repository.
 
 That's it. No migrations or other setup required.
 
