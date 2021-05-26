@@ -1,16 +1,16 @@
-# 🥧 pi architecture
+# 🥧 pi dashboard
 
-I'm currently setting up my living room Raspberry Pi.
+The monorepo to my Raspberry Pi dashboard! Containing the client code for the Pi and the server code that runs on a Heroku Dyno.
 
-The first add-on is a POS58 receipt printer that accepts messages via HTTP.
+![The dashboard home page with weather, printer, and sky modules enabled.](https://github.com/healeycodes/pi/blob/main/client/preview.png)
 
-This is so friends and family (and presumably spam bots too since I haven't hidden the URL) can ping me their thoughts.
+A module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
 
-![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.png)
+The completed modules so far:
 
-The messages end up in a queue built on PostgreSQL. Calling it a 'queue' is probably too generous. They're printed in order – let's leave it at that.
-
-The server runs on Heroku's free-tier.
+- :evergreen_tree: live temperature/humidity collected from an AMxx compatible sensor.
+- :printer: receive printer messages to a POS58 compatible printer.
+- :satellite: view the list of visible GPS satellites from a GPS hardware module.
 
 ## Run
 
@@ -20,7 +20,7 @@ Create a Heroku project.
 
 Add a PostgreSQL database via the GUI.
 
-Add a config var of `PRINTER_PW` via GUI.
+Add a config var of `PW` via GUI.
 
 Deploy from this GitHub repository.
 
@@ -28,7 +28,7 @@ That's it. No migrations or other setup required.
 
 #### Client
 
-You'll need a Raspberry Pi connected to the internet with a POS58 receipt printer attached via USB.
+You'll need a Raspberry Pi connected to the internet. Depending on what modules you've enabled in `client/config.py` you may need hardware connected and setup e.g. to use the Sky module, your GPS device must be communicating with `gpsd`.
 
 ```
 cd client/
