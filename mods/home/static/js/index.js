@@ -6,9 +6,9 @@ if (window.mods.includes("weather")) {
     const data = await fetch("/weather/get");
     const json = await data.json();
 
-    weather.innerHTML = `Weather data fresh as of ${moment(
-      json.timestamp
-    ).fromNow()}..<br />
+    const m = moment(json.timestamp);
+    m.add(1, "hours"); // Add offset
+    weather.innerHTML = `Weather data fresh as of ${m.fromNow()}..<br />
     <ul>
       <li>Temperature: ${json.temperature.toFixed(1)}°C</li>
       <li>Humidity: ${json.humidity.toFixed(1)}°C</li>
@@ -41,9 +41,9 @@ if (window.mods.includes("sky")) {
         new Date(satellite.timestamp)
       );
     });
-    sky.innerHTML = `Satellite data fresh as of ${moment(
-      lastSeenMinDate
-    ).fromNow()}..<br />
+    const m = moment(lastSeenMinDate);
+    m.add(1, "hours"); // Add offset
+    sky.innerHTML = `Satellite data fresh as of ${m.fromNow()}..<br />
     <ul>`;
 
     // Visible satellites first
