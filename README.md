@@ -8,9 +8,10 @@ A module system allows different features to be toggled on and off so you don't 
 
 The completed modules so far:
 
-- :evergreen_tree: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
+- :house: &nbsp; a Windows 98 themed dashboard.
+- :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware device.
 - :printer: &nbsp; receive printer messages to a POS58 compatible printer.
-- :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware module.
+- :thermometer: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
 
 ## Run
 
