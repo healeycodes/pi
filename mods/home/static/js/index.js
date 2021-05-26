@@ -36,7 +36,7 @@ if (window.mods.includes("sky")) {
 
     let lastSeenMinDate = new Date(0);
     json.map((satellite) => {
-      lastSeenMinDate = Math.min(
+      lastSeenMinDate = Math.max(
         lastSeenMinDate,
         new Date(satellite.timestamp)
       );
