@@ -36,24 +36,16 @@
         >
       </div>
     </div>
-    {% if 'sky' in mods %}
-    <div class="window" style="margin: 32px; width: 250px">
-      <div class="title-bar">
-        <div class="title-bar-text">GPS</div>
-      </div>
-      <div class="window-body">
-        <img src="static/img/gps-4.png" />
-        <p id="sky"></p>
-      </div>
-    </div>
-    {% endif %} {% if 'weather' in mods %}
+    {% if 'weather' in mods %}
     <div class="window" style="margin: 32px; width: 250px">
       <div class="title-bar">
         <div class="title-bar-text">Weather</div>
       </div>
       <div class="window-body">
         <img src="static/img/tree-0.png" />
-        <p id="weather"></p>
+        <p id="weather">
+          An AM2302 (wired DHT22) temp/humid sensor in our living room.
+        </p>
       </div>
     </div>
     {% endif %} {% if 'printer' in mods %}
@@ -63,8 +55,20 @@
       </div>
       <div class="window-body">
         <img src="static/img/printer-0.png" />
+        <p>A POS58 receipt printer.</p>
         <p id="printer"></p>
         <a href="/printer/"><button>Print a message</button></a>
+      </div>
+    </div>
+    {% endif %} {% if 'sky' in mods %}
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">GPS</div>
+      </div>
+      <div class="window-body">
+        <img src="static/img/gps-4.png" />
+        <p>A GT-U7 GPS module.</p>
+        <p id="sky"></p>
       </div>
     </div>
     {% endif %}
