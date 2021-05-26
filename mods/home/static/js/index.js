@@ -8,7 +8,7 @@ if (window.mods.includes("weather")) {
 
     weather.innerHTML = `Weather data fresh as of ${moment(
       json.timestamp
-    ).fromNow()} seconds ago..<br />
+    ).fromNow()}..<br />
     <ul>
       <li>Temperature: ${json.temperature.toFixed(1)}°C</li>
       <li>Humidity: ${json.humidity.toFixed(1)}°C</li>
@@ -43,7 +43,7 @@ if (window.mods.includes("sky")) {
     });
     sky.innerHTML = `Satellite data fresh as of ${moment(
       lastSeenMinDate
-    ).fromNow()} seconds ago..<br />
+    ).fromNow()}..<br />
     <ul>`;
 
     // Visible satellites first
