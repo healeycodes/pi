@@ -1,8 +1,8 @@
 # :pie: pi dashboard
 
-This is the monorepo for my Raspberry Pi dashboard!
+This is the monorepo for my Raspberry Pi dashboard! It's me-ware, and you're unlikely to use it but I'm happy to help you set it up.
 
-A module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
+It includes: a module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
 
 - :house: a Windows 98 themed dashboard.
 - :satellite: view the list of visible GPS satellites from a GPS hardware device.
