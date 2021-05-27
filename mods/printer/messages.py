@@ -1,4 +1,4 @@
-from db import connect, close
+from db import connect, close, FORMAT_STRING as F
 from datetime import datetime
 from dataclasses import dataclass
 
@@ -16,7 +16,7 @@ def put_msg(text, name):
     status = f"queued at {datetime.now()}"
     connection, cursor = connect()
     cursor.execute(
-        "INSERT INTO message_queue (status, text, name, timestamp) VALUES (%s, %s, %s, %s) RETURNING id",
+        f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F}) RETURNING id",
         (status, text, name, datetime.now()),
     )
     msg_id = cursor.fetchone()[0]
@@ -27,7 +27,7 @@ def put_msg(text, name):
 def update_msg_status(msg_id, status):
     connection, cursor = connect()
     cursor.execute(
-        "UPDATE message_queue set status=%s, timestamp=%s WHERE id=%s",
+        f"UPDATE message_queue set status={F}, timestamp={F} WHERE id={F}",
         (status, datetime.now(), msg_id),
     )
     close(connection)
@@ -36,7 +36,7 @@ def update_msg_status(msg_id, status):
 def check_msg(msg_id):
     connection, cursor = connect()
     cursor.execute(
-        "SELECT id, status, text, name, timestamp FROM message_queue WHERE id=%s",
+        f"SELECT id, status, text, name, timestamp FROM message_queue WHERE id={F}",
         (msg_id,),
     )
     row = cursor.fetchone()

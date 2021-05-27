@@ -1,10 +1,13 @@
 import os
 
 """
-We use sqlite3 locally but postgresql on the dyno.
+We use sqlite3 locally but PostgreSQL on the Heroku Dyno.
 """
 
 DATABASE_URL = os.environ["DATABASE_URL"] if "DATABASE_URL" in os.environ else None
+
+# handle the different formatting string (sqlite uses `?` but postgresql uses `%s`)
+FORMAT_STRING = "%s" if DATABASE_URL else "?"
 
 
 def connect():
@@ -15,7 +18,7 @@ def connect():
     else:
         import sqlite3
 
-        connection = sqlite3.connect("dev.db")
+        connection = sqlite3.connect("file::memory:?cache=shared", uri=True)
     cursor = connection.cursor()
     return connection, cursor
 

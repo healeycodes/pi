@@ -1,4 +1,4 @@
-from db import connect, close
+from db import connect, close, FORMAT_STRING as F
 from datetime import datetime
 from dataclasses import dataclass
 
@@ -17,7 +17,7 @@ def save_weather(temperature, humidity):
     cursor.execute("DELETE from weather")
 
     cursor.execute(
-        "INSERT INTO weather (temperature, humidity, timestamp) VALUES (%s, %s, %s)",
+        f"INSERT INTO weather (temperature, humidity, timestamp) VALUES ({F}, {F}, {F})",
         (temperature, humidity, datetime.now(),),
     )
     close(connection)
