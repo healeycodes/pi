@@ -14,7 +14,7 @@ FRUITS = {
 }
 
 
-def weather_thread(URL, PW):
+def weather_thread(URL, PW, SLEEP_AT_NIGHT):
     def t():
         return f"{datetime.now()}"
 
@@ -46,14 +46,15 @@ def weather_thread(URL, PW):
 
     while True:
         now = datetime.now().hour
-        # sleep to save on Heroku dyno hours
-        if now > 7 and now < 22:
+        if SLEEP_AT_NIGHT:
+            if now > 7 and now < 22:
+                data = get_weather()
+                if data:
+                    send_weather(data)
+        else:
+            # TODO: refactor this duplicated block
             data = get_weather()
             if data:
                 send_weather(data)
 
         time.sleep(10)
-
-
-if __name__ == "__main__":
-    weather_thread("_", "_")

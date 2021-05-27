@@ -4,19 +4,19 @@ from flask import Flask, redirect
 app = Flask(__name__)
 
 if CONFIG.printer:
-    from mods.printer import printer
+    from mods.printer import printermod
 
-    app.register_blueprint(printer.bp)
+    app.register_blueprint(printermod.bp)
 
 if CONFIG.sky:
-    from mods.sky import sky
+    from mods.sky import skymod
 
-    app.register_blueprint(sky.bp)
+    app.register_blueprint(skymod.bp)
 
 if CONFIG.weather:
-    from mods.weather import weather
+    from mods.weather import weathermod
 
-    app.register_blueprint(weather.bp)
+    app.register_blueprint(weathermod.bp)
 
 if CONFIG.home:
     from mods.home import home

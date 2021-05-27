@@ -4,11 +4,11 @@ import requests
 from datetime import datetime
 
 """
-Setup GPS w/ https://gitlab.com/gpsd/gpsd
+Setup GPS via https://gitlab.com/gpsd/gpsd
 """
 
 
-def sky_thread(URL, PW):
+def sky_thread(URL, PW, SLEEP_AT_NIGHT):
     gpsd = None
 
     def t():
@@ -60,16 +60,23 @@ def sky_thread(URL, PW):
 
     while True:
         now = datetime.now().hour
-        # sleep to save on Heroku dyno hours
-        if now > 7 and now < 22:
+        if SLEEP_AT_NIGHT:
+            if now > 7 and now < 22:
+                if gpsd is None:
+                    gpsd = gps.gps(mode=gps.WATCH_ENABLE)
+                sync_gpsd()
+                send_sats()
+            else:
+                # if we're not reading from the buffer frequently
+                # it can cause problems, so close when we're sleeping
+                if gpsd is not None:
+                    gpsd.close()
+                    gpsd = None
+        else:
+            # TODO: refactor this duplicated block
             if gpsd is None:
                 gpsd = gps.gps(mode=gps.WATCH_ENABLE)
             sync_gpsd()
             send_sats()
-        else:
-            if gpsd is not None:
-                # close when we rest for the night
-                gpsd.close()
-                gpsd = None
 
         time.sleep(10)

@@ -3,8 +3,12 @@ import requests
 import pos58
 from datetime import datetime
 
+"""
+Requires a POS58 compatible printer.
+"""
 
-def printer_thread(URL, PW):
+
+def printer_thread(URL, PW, SLEEP_AT_NIGHT):
     def t():
         return f"{datetime.now()}"
 
@@ -38,7 +42,9 @@ def printer_thread(URL, PW):
 
     while True:
         now = datetime.now().hour
-        # sleep to save on Heroku dyno hours
-        if now > 7 and now < 22:
+        if SLEEP_AT_NIGHT:
+            if now > 7 and now < 22:
+                get_message()
+        else:
             get_message()
         time.sleep(10)
