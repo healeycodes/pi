@@ -1,5 +1,4 @@
-import json
-from config import CONFIG
+from serverconfig import CONFIG
 from flask import Blueprint, render_template
 
 bp = Blueprint(
@@ -21,6 +20,4 @@ def class_vars(c):
 
 @bp.route("/")
 def index():
-    return render_template(
-        "index.html", mods=class_vars(CONFIG), mods_json=json.dumps(class_vars(CONFIG))
-    )
+    return render_template("index.html", mods=class_vars(CONFIG))
