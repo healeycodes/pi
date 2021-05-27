@@ -4,10 +4,10 @@ This is the monorepo for my Raspberry Pi dashboard!
 
 A module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
 
-- :house: &nbsp; a Windows 98 themed dashboard.
-- :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware device.
-- :printer: &nbsp; receive printer messages to a POS58 compatible printer.
-- :thermometer: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
+- :house: a Windows 98 themed dashboard.
+- :satellite: view the list of visible GPS satellites from a GPS hardware device.
+- :printer: receive printer messages to a POS58 compatible printer.
+- :thermometer: live temperature/humidity collected from an AMxx compatible sensor.
 
 <br>
 
@@ -19,7 +19,7 @@ A module system allows different features to be toggled on and off so you don't 
 
 #### Server
 
-Toggle server modules in `config.py`.
+Toggle server modules in `serverconfig.py`.
 
 1. Create a Heroku project.
 
@@ -31,9 +31,11 @@ Toggle server modules in `config.py`.
 
 That's it. No migrations or other setup required.
 
+For local development, `pip install -r requirements.txt` and run `python app.py`.
+
 #### Client
 
-You'll need a Raspberry Pi connected to the internet. Depending on what modules you've enabled in `client/config.py` you may need hardware connected and setup e.g. to use the Sky module, your GPS device must be communicating with `gpsd`.
+You'll need a Raspberry Pi connected to the internet. Depending on what modules you've enabled in `client/clientconfig.py` you may need hardware connected and setup e.g. to use the Sky module, your GPS device must be communicating with `gpsd`.
 
 ```
 cd client/
