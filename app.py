@@ -1,4 +1,4 @@
-from config import CONFIG
+from serverconfig import CONFIG
 from flask import Flask, redirect
 
 app = Flask(__name__)
@@ -19,9 +19,9 @@ if CONFIG.weather:
     app.register_blueprint(weathermod.bp)
 
 if CONFIG.home:
-    from mods.home import home
+    from mods.home import homemod
 
-    app.register_blueprint(home.bp)
+    app.register_blueprint(homemod.bp)
 
     @app.route("/")
     def index():
