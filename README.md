@@ -1,34 +1,39 @@
-# 🥧 pi architecture
+# :pie: pi dashboard
 
-I'm currently setting up my living room Raspberry Pi.
+This is the monorepo for my Raspberry Pi dashboard!
 
-The first add-on is a POS58 receipt printer that accepts messages via HTTP.
+A module system allows different features to be toggled on and off so you don't need my exact hardware setup. It also allows multiple Pis to use the same server.
 
-This is so friends and family (and presumably spam bots too since I haven't hidden the URL) can ping me their thoughts.
+- :house: &nbsp; a Windows 98 themed dashboard.
+- :satellite: &nbsp; view the list of visible GPS satellites from a GPS hardware device.
+- :printer: &nbsp; receive printer messages to a POS58 compatible printer.
+- :thermometer: &nbsp; live temperature/humidity collected from an AMxx compatible sensor.
 
-![Receipt with "test!" and "Hello GitHub" on a bookshelf](https://github.com/healeycodes/pi/blob/main/client/preview.png)
+<br>
 
-The messages end up in a queue built on PostgreSQL. Calling it a 'queue' is probably too generous. They're printed in order – let's leave it at that.
+![The dashboard home page with weather, printer, and sky modules enabled.](https://github.com/healeycodes/pi/blob/main/client/preview.png)
 
-The server runs on Heroku's free-tier.
+<br>
 
 ## Run
 
 #### Server
 
-Create a Heroku project.
+Toggle server modules in `config.py`.
 
-Add a PostgreSQL database via the GUI.
+1. Create a Heroku project.
 
-Add a config var of `PRINTER_PW` via GUI.
+2. Add a PostgreSQL database via the GUI.
 
-Deploy from this GitHub repository.
+3. Add a config var of `PW` via GUI.
+
+4. Deploy from this GitHub repository.
 
 That's it. No migrations or other setup required.
 
 #### Client
 
-You'll need a Raspberry Pi connected to the internet with a POS58 receipt printer attached via USB.
+You'll need a Raspberry Pi connected to the internet. Depending on what modules you've enabled in `client/config.py` you may need hardware connected and setup e.g. to use the Sky module, your GPS device must be communicating with `gpsd`.
 
 ```
 cd client/
