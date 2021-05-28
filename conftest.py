@@ -14,4 +14,3 @@ def client():
         yield client
 
     os.close(db_fd)
-    # os.unsetenv("TEST_DB")
