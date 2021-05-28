@@ -1,5 +1,5 @@
 import json
-from serverconfig import CONFIG
+from server.config import CONFIG
 from flask import Blueprint, render_template
 
 bp = Blueprint(

@@ -1,4 +1,4 @@
-from common import auth
+from server.common import auth
 from mods.weather.data import save_weather, get_weather
 from flask import Blueprint, request, jsonify
 
