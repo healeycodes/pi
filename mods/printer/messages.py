@@ -61,11 +61,7 @@ def check_msg(msg_id):
     db.close()
     if row:
         return Message(
-            msg_id=row[0],
-            status=row[1],
-            text=row[2],
-            name=row[3],
-            timestamp=row[4],
+            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
         )
 
 
@@ -80,11 +76,7 @@ def get_msg():
     db.close()
     if row:
         return Message(
-            msg_id=row[0],
-            status=row[1],
-            text=row[2],
-            name=row[3],
-            timestamp=row[4],
+            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
         )
 
 
@@ -98,11 +90,7 @@ def list_msgs():
 
     return [
         Message(
-            msg_id=row[0],
-            status=row[1],
-            text=row[2],
-            name=row[3],
-            timestamp=row[4],
+            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
         )
         for row in rows
     ]

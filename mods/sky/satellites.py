@@ -61,20 +61,12 @@ def save_sats(sats):
             desc = PRN_DESCRIPTIONS[prn] if prn in PRN_DESCRIPTIONS else "Unknown"
             cursor.execute(
                 f"INSERT INTO satellites (prn, status, description, timestamp) VALUES ({F}, {F}, {F}, {F})",
-                (
-                    prn,
-                    1,
-                    desc,
-                    datetime.now(),
-                ),
+                (prn, 1, desc, datetime.now(),),
             )
         else:
             cursor.execute(
                 f"UPDATE satellites SET status=1, timestamp={F} WHERE prn={F} and status=0",
-                (
-                    datetime.now(),
-                    prn,
-                ),
+                (datetime.now(), prn,),
             )
     db.close()
 

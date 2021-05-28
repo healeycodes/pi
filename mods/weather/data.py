@@ -19,11 +19,7 @@ def save_weather(temperature, humidity):
 
     cursor.execute(
         f"INSERT INTO weather (temperature, humidity, timestamp) VALUES ({F}, {F}, {F})",
-        (
-            temperature,
-            humidity,
-            datetime.now(),
-        ),
+        (temperature, humidity, datetime.now(),),
     )
     db.close()
 
@@ -31,15 +27,13 @@ def save_weather(temperature, humidity):
 def get_weather():
     db = get_db()
     cursor = db.connection.cursor()
-    
+
     cursor.execute(
         "SELECT temperature, humidity, timestamp FROM weather ORDER BY id DESC LIMIT 1"
     )
     row = cursor.fetchone()
     if row:
         return Weather(
-            temperature=float(row[0]),
-            humidity=float(row[1]),
-            timestamp=row[2],
+            temperature=float(row[0]), humidity=float(row[1]), timestamp=row[2],
         )
     db.close()

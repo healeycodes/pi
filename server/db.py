@@ -5,7 +5,9 @@ import os
 
 TEST_DB = os.environ["TEST_DB"] if "TEST_DB" in os.environ else None
 DATABASE_URL = os.environ["DATABASE_URL"] if "DATABASE_URL" in os.environ else None
-FORMAT_STRING = "%s" if DATABASE_URL else "?"
+FORMAT_STRING = (
+    "%s" if DATABASE_URL else "?"
+)  # (sqlite uses `?` but postgresql uses `%s`)
 
 
 class DB:
@@ -14,10 +16,6 @@ class DB:
         self.mode = mode
         self.addr = addr
         self.uri = uri
-
-        # (sqlite uses `?` but postgresql uses `%s`)
-        self.format_string = "%s" if mode != "sqlite" else "?"
-
         self.connect()
 
     def connect(self):
