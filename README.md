@@ -47,9 +47,12 @@ I run that last command on boot via `/etc/rc.local`.
 
 ## Tests
 
-TODO.
+End to end tests that make sure the server + all mods are working correctly.
 
-Some end to end ones with an in-memory PostgreSQL database should be enough.
+`pip install -r requirements.txt`
+
+`python -m pytest`
+
 
 <br>
 

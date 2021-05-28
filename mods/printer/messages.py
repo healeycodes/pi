@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from dataclasses import dataclass
 from server.db import get_db, FORMAT_STRING as F
@@ -16,11 +17,23 @@ def put_msg(text, name):
     db = get_db()
     cursor = db.connection.cursor()
     status = f"queued at {datetime.now()}"
-    cursor.execute(
-        f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F})",
-        (status, text, name, datetime.now()),
-    )
-    msg_id = cursor.lastrowid
+
+    # TODO: find a agnostic way of doing the following..
+    # sqlite doesn't like 'RETURNING' (at least in the version that's bundled with python)
+    # and postgresql doesn't like 'lastrowid'!
+    if "DATABASE_URL" in os.environ:
+        cursor.execute(
+            f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F}) RETURNING id",
+            (status, text, name, datetime.now()),
+        )
+        msg_id = cursor.fetchone()[0]
+    else:
+        cursor.execute(
+            f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F})",
+            (status, text, name, datetime.now()),
+        )
+        msg_id = cursor.lastrowid
+
     db.close()
     return msg_id
 
