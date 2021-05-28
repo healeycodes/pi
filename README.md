@@ -19,7 +19,7 @@ It includes: a module system allows different features to be toggled on and off 
 
 #### Server
 
-Toggle server modules in `serverconfig.py`.
+Toggle server modules in `server/config.py`.
 
 1. Create a Heroku project.
 
@@ -31,7 +31,7 @@ Toggle server modules in `serverconfig.py`.
 
 That's it. No migrations or other setup required.
 
-For local development, `pip install -r requirements.txt` and run `python app.py`.
+For local development, `pip install -r requirements.txt` and run `export FLASK_APP=wsgi:app ;python3.9 -m flask run`.
 
 #### Client
 
