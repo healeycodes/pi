@@ -1,3 +1,5 @@
+[![Flask tests](https://github.com/healeycodes/pi/actions/workflows/python-app.yml/badge.svg)](https://github.com/healeycodes/pi/actions/workflows/python-app.yml)
+
 # :pie: pi dashboard
 
 This is the monorepo for my Raspberry Pi dashboard! It's me-ware, and you're unlikely to use it but I'm happy to help you set it up.
