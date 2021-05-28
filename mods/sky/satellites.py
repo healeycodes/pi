@@ -1,4 +1,4 @@
-from db import connect, close, FORMAT_STRING as F
+from server.db import get_db, FORMAT_STRING as F
 from datetime import datetime
 from dataclasses import dataclass
 
@@ -47,8 +47,10 @@ class Satellite:
 
 
 def save_sats(sats):
+    db = get_db()
+    cursor = db.connection.cursor()
+
     # TODO: optimize this SQL once we've settled on a SQL language
-    connection, cursor = connect()
     cursor.execute(
         f"UPDATE satellites SET status=0, timestamp={F} WHERE status=1",
         (datetime.now(),),
@@ -59,21 +61,31 @@ def save_sats(sats):
             desc = PRN_DESCRIPTIONS[prn] if prn in PRN_DESCRIPTIONS else "Unknown"
             cursor.execute(
                 f"INSERT INTO satellites (prn, status, description, timestamp) VALUES ({F}, {F}, {F}, {F})",
-                (prn, 1, desc, datetime.now(),),
+                (
+                    prn,
+                    1,
+                    desc,
+                    datetime.now(),
+                ),
             )
         else:
             cursor.execute(
                 f"UPDATE satellites SET status=1, timestamp={F} WHERE prn={F} and status=0",
-                (datetime.now(), prn,),
+                (
+                    datetime.now(),
+                    prn,
+                ),
             )
-    close(connection)
+    db.close()
 
 
 def get_sats():
-    connection, cursor = connect()
+    db = get_db()
+    cursor = db.connection.cursor()
+
     cursor.execute("SELECT prn, description, status, timestamp FROM satellites")
     rows = cursor.fetchall()
-    close(connection)
+    db.close()
     return [
         Satellite(prn=row[0], description=row[1], status=row[2], timestamp=row[3])
         for row in rows

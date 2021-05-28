@@ -1,3 +1,4 @@
+from server.db import get_db
 from server.config import CONFIG
 from flask import Flask, redirect
 
@@ -39,5 +40,6 @@ def create_app():
 
 
 if __name__ == "__main__":
+    get_db().setup()
     app = create_app()
     app.run(debug=True)

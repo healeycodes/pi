@@ -52,7 +52,7 @@ def confirm_msg():
 @bp.route("/get-msg")
 @auth
 def get_msg():
-    msg = messages.get_msgs()
+    msg = messages.get_msg()
     if msg:
         return jsonify({"msg_id": msg.msg_id, "text": msg.text, "name": msg.name})
     return "", 204

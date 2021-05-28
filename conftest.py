@@ -1,8 +1,17 @@
+import os
 import pytest
-from server import create_app
+import tempfile
 
 
 @pytest.fixture
-def app():
+def client():
+    db_fd, os.environ["TEST_DB"] = tempfile.mkstemp()
+
+    from server import create_app
+
     app = create_app()
-    return app
+    with app.test_client() as client:
+        yield client
+
+    os.close(db_fd)
+    # os.unsetenv("TEST_DB")

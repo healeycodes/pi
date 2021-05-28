@@ -1,6 +1,6 @@
-from db import connect, close, FORMAT_STRING as F
 from datetime import datetime
 from dataclasses import dataclass
+from server.db import get_db, FORMAT_STRING as F
 
 
 @dataclass
@@ -13,61 +13,82 @@ class Message:
 
 
 def put_msg(text, name):
+    db = get_db()
+    cursor = db.connection.cursor()
     status = f"queued at {datetime.now()}"
-    connection, cursor = connect()
-    cursor.execute(
-        f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F}) RETURNING id",
+    msg_id = cursor.execute(
+        f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F})",
         (status, text, name, datetime.now()),
-    )
-    msg_id = cursor.fetchone()[0]
-    close(connection)
+    ).lastrowid
+    db.close()
     return msg_id
 
 
 def update_msg_status(msg_id, status):
-    connection, cursor = connect()
+    db = get_db()
+    cursor = db.connection.cursor()
+
     cursor.execute(
         f"UPDATE message_queue set status={F}, timestamp={F} WHERE id={F}",
         (status, datetime.now(), msg_id),
     )
-    close(connection)
+    db.close()
 
 
 def check_msg(msg_id):
-    connection, cursor = connect()
+    db = get_db()
+    cursor = db.connection.cursor()
+
     cursor.execute(
         f"SELECT id, status, text, name, timestamp FROM message_queue WHERE id={F}",
         (msg_id,),
     )
     row = cursor.fetchone()
-    close(connection)
+    db.close()
     if row:
         return Message(
-            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
+            msg_id=row[0],
+            status=row[1],
+            text=row[2],
+            name=row[3],
+            timestamp=row[4],
         )
 
 
-def get_msgs():
-    connection, cursor = connect()
+def get_msg():
+    db = get_db()
+    cursor = db.connection.cursor()
+
     cursor.execute(
-        "SELECT id, status, text, name, timestamp FROM message_queue WHERE status LIKE 'queued%' LIMIT 1"
+        "SELECT id, status, text, name, timestamp FROM message_queue WHERE status LIKE 'queued%' ORDER BY id ASC LIMIT 1"
     )
     row = cursor.fetchone()
+    db.close()
     if row:
         return Message(
-            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
+            msg_id=row[0],
+            status=row[1],
+            text=row[2],
+            name=row[3],
+            timestamp=row[4],
         )
-    close(connection)
 
 
 def list_msgs():
-    connection, cursor = connect()
+    db = get_db()
+    cursor = db.connection.cursor()
+
     cursor.execute("SELECT id, status, text, name, timestamp FROM message_queue")
     rows = cursor.fetchall()
-    close(connection)
+    db.close()
+
     return [
         Message(
-            msg_id=row[0], status=row[1], text=row[2], name=row[3], timestamp=row[4],
+            msg_id=row[0],
+            status=row[1],
+            text=row[2],
+            name=row[3],
+            timestamp=row[4],
         )
         for row in rows
     ]
