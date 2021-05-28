@@ -1,5 +1,3 @@
-const store = {};
-
 if (window.mods.includes("weather")) {
   const weather = document.querySelector("#weather");
   function update() {
