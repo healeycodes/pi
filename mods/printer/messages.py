@@ -16,10 +16,11 @@ def put_msg(text, name):
     db = get_db()
     cursor = db.connection.cursor()
     status = f"queued at {datetime.now()}"
-    msg_id = cursor.execute(
+    cursor.execute(
         f"INSERT INTO message_queue (status, text, name, timestamp) VALUES ({F}, {F}, {F}, {F})",
         (status, text, name, datetime.now()),
-    ).lastrowid
+    )
+    msg_id = cursor.lastrowid
     db.close()
     return msg_id
 
