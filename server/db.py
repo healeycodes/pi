@@ -78,11 +78,11 @@ def get_db():
     """
     if TEST_DB:
         database = DB(mode="sqlite", addr=TEST_DB, uri=True)
-        database.setup()
     elif DATABASE_URL:
         database = DB(mode="postgresql", addr=DATABASE_URL, uri=False)
     else:
         database = DB(mode="sqlite", addr="dev.db", uri=True)
-        database.setup()
 
+    # create tables if required
+    database.setup()
     return database
