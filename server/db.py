@@ -1,8 +1,5 @@
 import os
 
-# use sqlite3 locally but postgresql on the heroku dyno
-
-
 TEST_DB = os.environ["TEST_DB"] if "TEST_DB" in os.environ else None
 DATABASE_URL = os.environ["DATABASE_URL"] if "DATABASE_URL" in os.environ else None
 FORMAT_STRING = (
@@ -10,7 +7,12 @@ FORMAT_STRING = (
 )  # (sqlite uses `?` but postgresql uses `%s`)
 
 
-class DB:
+class _DB:
+    """
+    An instance of a database. Connected to either sqlite or postgresql.
+    Should be retrieved from `db.get_db` rather than called directly.
+    """
+
     def __init__(self, mode="sqlite", addr="", uri=False):
         self.connection = None
         self.mode = mode
@@ -77,11 +79,11 @@ def get_db():
         - Shared memory file database for dev
     """
     if TEST_DB:
-        database = DB(mode="sqlite", addr=TEST_DB, uri=True)
+        database = _DB(mode="sqlite", addr=TEST_DB, uri=True)
     elif DATABASE_URL:
-        database = DB(mode="postgresql", addr=DATABASE_URL, uri=False)
+        database = _DB(mode="postgresql", addr=DATABASE_URL, uri=False)
     else:
-        database = DB(mode="sqlite", addr="dev.db", uri=True)
+        database = _DB(mode="sqlite", addr="dev.db", uri=True)
 
     # create tables if required
     database.setup()

@@ -33,7 +33,16 @@ Toggle server modules in `server/config.py`.
 
 That's it. No migrations or other setup required.
 
-For local development, `pip install -r requirements.txt` and run `export FLASK_APP=wsgi:app ;python3.9 -m flask run`.
+<br>
+
+For local development:
+
+```bash
+pip install -r requirements.txt
+export FLASK_APP=wsgi:app ;python3.9 -m flask run
+```
+
+A sqlite database is automatically created and used instead of PostgreSQL.
 
 #### Client
 
