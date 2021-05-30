@@ -1,7 +1,12 @@
 import json
 
 
-def test_printer(client):
+def test_printer_no_new_messages(client):
+    rv = client.get("/printer/get-msg")
+    assert rv.status_code == 204
+
+
+def test_printer_example_use_case(client):
 
     # send two messages to the print queue
     rv = client.get("/printer/put-msg?text=printme1")

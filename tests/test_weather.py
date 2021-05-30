@@ -1,7 +1,7 @@
 import json
 
 
-def test_weather(client):
+def test_weather_example_use_case(client):
 
     rv = client.get("/weather/send?temperature=12.2&humidity=32.2")
     assert rv.status_code == 200

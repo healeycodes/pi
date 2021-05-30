@@ -1,7 +1,7 @@
 import json
 
 
-def test_sky(client):
+def test_sky_example_use_case(client):
 
     # send two satellite prns
     rv = client.get("/sky/send?sats=01,02")
