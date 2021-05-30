@@ -46,11 +46,13 @@ pip install -r requirements.txt
 export FLASK_APP=wsgi:app ;python3.9 -m flask run
 ```
 
-A sqlite database is automatically created and used instead of PostgreSQL.
+A SQLite database is automatically created and used instead of PostgreSQL. If no `PW` environment variable is provided, no password is required for client requests.
 
 #### Client
 
-You'll need a Raspberry Pi connected to the internet. Depending on what modules you've enabled in `client/clientconfig.py` you may need hardware connected and setup e.g. to use the Sky module, your GPS device must be communicating with `gpsd`.
+The client is written with a Raspberry Pi in mind and has been tested with the latest Raspbian (v10) and the bundled Python 3 that comes with it.
+
+Depending on what modules you've enabled in `client/clientconfig.py` you may need hardware connected and setup e.g. to use the sky module, your GPS device must be communicating with `gpsd`.
 
 ```
 cd client/
@@ -70,5 +72,7 @@ End to end tests that make sure the server + all mods are working correctly.
 
 
 <br>
+
+## License
 
 Licensed MIT
