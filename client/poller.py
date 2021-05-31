@@ -13,25 +13,24 @@ I start it in the background via .bashrc
 
 URL = sys.argv[1]
 PW = sys.argv[2]
-SLEEP_AT_NIGHT = (
-    True  # to use a Heroku Dyno in the free tier without maxing out your hours
-)
 
 if CONFIG.printer:
     printer_instance = threading.Thread(
-        target=printer_thread, args=(URL, PW, SLEEP_AT_NIGHT)
+        target=printer_thread, args=(URL, PW, CONFIG.sleep_at_night)
     )
     printer_instance.start()
     print("printer mod started!")
 
 if CONFIG.sky:
-    sky_instance = threading.Thread(target=sky_thread, args=(URL, PW, SLEEP_AT_NIGHT))
+    sky_instance = threading.Thread(
+        target=sky_thread, args=(URL, PW, CONFIG.sleep_at_night)
+    )
     sky_instance.start()
     print("sky mod started!")
 
 if CONFIG.weather:
     weather_instance = threading.Thread(
-        target=weather_thread, args=(URL, PW, SLEEP_AT_NIGHT)
+        target=weather_thread, args=(URL, PW, CONFIG.sleep_at_night)
     )
     weather_instance.start()
     print("weather mod started!")

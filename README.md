@@ -62,6 +62,8 @@ sudo python3 poller.py https://your-url.herokuapp.com password_here
 
 I run that last command on boot via `/etc/rc.local`.
 
+Note: in the client config, I use `sleep_at_night` to put my Pi to sleep so it can sit on the Heroku free tier without using up all the monthly hours.
+
 ## Tests
 
 End to end tests that make sure the server + all mods are working correctly.
